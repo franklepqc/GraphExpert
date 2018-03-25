@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Wpf", "GraphExpert.Wpf\GraphExpert.Wpf.csproj", "{701D5328-1F21-4798-A327-1BBB5C8BAE8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Data.Interfaces", "GraphExpert.Data.Interfaces\GraphExpert.Data.Interfaces.csproj", "{D066580B-9886-487F-A3E1-6D856039FD65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Data", "GraphExpert.Data\GraphExpert.Data.csproj", "{01A78403-1FE5-4333-9950-4244A1FB8173}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{701D5328-1F21-4798-A327-1BBB5C8BAE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{701D5328-1F21-4798-A327-1BBB5C8BAE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{701D5328-1F21-4798-A327-1BBB5C8BAE8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D066580B-9886-487F-A3E1-6D856039FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D066580B-9886-487F-A3E1-6D856039FD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D066580B-9886-487F-A3E1-6D856039FD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D066580B-9886-487F-A3E1-6D856039FD65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01A78403-1FE5-4333-9950-4244A1FB8173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A78403-1FE5-4333-9950-4244A1FB8173}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A78403-1FE5-4333-9950-4244A1FB8173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A78403-1FE5-4333-9950-4244A1FB8173}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -79,8 +79,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Models\Stop.cs" />
-    <Compile Include="Models\Trajet.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +120,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphExpert.Data.Interfaces\GraphExpert.Data.Interfaces.csproj">
+      <Project>{d066580b-9886-487f-a3e1-6d856039fd65}</Project>
+      <Name>GraphExpert.Data.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphExpert.Data\GraphExpert.Data.csproj">
+      <Project>{01a78403-1fe5-4333-9950-4244a1fb8173}</Project>
+      <Name>GraphExpert.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

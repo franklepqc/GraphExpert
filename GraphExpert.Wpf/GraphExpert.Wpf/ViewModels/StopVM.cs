@@ -1,17 +1,18 @@
-﻿using GraphExpert.Wpf.Models;
-
-namespace GraphExpert.Wpf.ViewModels
+﻿namespace GraphExpert.Wpf.ViewModels
 {
-    public class StopVM : Stop
+    public class StopVM
     {
-        public StopVM(double x, double y, byte id, string etiquette)
-            : base(id, etiquette)
+        public StopVM(double x, double y, byte id)
         {
             X = x;
             Y = y;
+            Id = id;
         }
 
         public double X { get; set; }
+
         public double Y { get; set; }
+
+        public byte Id { get; set; }
     }
 }
