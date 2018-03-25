@@ -1,4 +1,5 @@
 ﻿using GraphExpert.Data.Interfaces.Modeles;
+using System.Collections.Generic;
 
 namespace GraphExpert.Data.Interfaces.Repos
 {
@@ -11,5 +12,7 @@ namespace GraphExpert.Data.Interfaces.Repos
         void Supprimer(byte idDepart, byte idArrivee);
 
         void Vider();
+
+        IEnumerable<ILiaison> Obtenir();
     }
 }

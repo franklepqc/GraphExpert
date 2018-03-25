@@ -31,6 +31,12 @@ namespace GraphExpert.Data.Repos
         }
 
         /// <summary>
+        /// Obtenir tous les arrêts.
+        /// </summary>
+        /// <returns>Arrêts</returns>
+        public IEnumerable<IArret> Obtenir() => _arrets;
+
+        /// <summary>
         /// Retire l'arrêt en question.
         /// </summary>
         /// <param name="id">Identifiant de l'arrêt.</param>

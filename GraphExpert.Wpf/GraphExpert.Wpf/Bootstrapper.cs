@@ -1,5 +1,7 @@
 ﻿using GraphExpert.Algorithmes;
 using GraphExpert.Algorithmes.Interfaces;
+using GraphExpert.Data;
+using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Data.Repos;
 using GraphExpert.Wpf.Views;
@@ -29,6 +31,8 @@ namespace GraphExpert.Wpf
             Container.RegisterType<IAlgorithmeBFS, AlgorithmeBFS>();
             Container.RegisterType<IStrategieAlgorithme, StrategieAlgorithme>();
             Container.RegisterType<IResolveur, Resolveur>();
+
+            Container.RegisterType<IFabriqueMatricePoids, FabriqueMatricePoids>();
         }
 
         protected override void InitializeModules()

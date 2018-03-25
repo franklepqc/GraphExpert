@@ -85,5 +85,11 @@ namespace GraphExpert.Data.Repos
         {
             _liaisons.Clear();
         }
+
+        /// <summary>
+        /// Obtenir toutes les liaisons.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ILiaison> Obtenir() => _liaisons;
     }
 }
