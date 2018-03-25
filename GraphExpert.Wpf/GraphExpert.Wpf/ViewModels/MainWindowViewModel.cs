@@ -1,10 +1,10 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
+using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Models;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Linq;
 
 namespace GraphExpert.Wpf.ViewModels
 {
@@ -24,6 +24,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// Résolveur.
         /// </summary>
         private IResolveur _resolveur;
+
+        /// <summary>
+        /// Fabrique.
+        /// </summary>
+        private IFabriqueMatricePoids _fabriqueMatricePoids;
 
         /// <summary>
         /// Arrêt n°1 cliqué.
@@ -98,11 +103,13 @@ namespace GraphExpert.Wpf.ViewModels
         /// <param name="repoArrets">Repository des arrêts.</param>
         /// <param name="repoLiaisons">Repository des liaisons.</param>
         /// <param name="resolveur">Résoudre par l'algorithme voulu.</param>
-        public MainWindowViewModel(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons, IResolveur resolveur)
+        /// <param name="fabriqueMatricePoids">Fabrique de la matrice de poids.</param>
+        public MainWindowViewModel(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons, IResolveur resolveur, IFabriqueMatricePoids fabriqueMatricePoids)
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;
             _resolveur = resolveur;
+            _fabriqueMatricePoids = fabriqueMatricePoids;
 
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
@@ -180,7 +187,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void Resoudre()
         {
-            _resolveur.Resoudre(_algorithme, null);
+            _resolveur.Resoudre(_algorithme, _fabriqueMatricePoids.Obtenir(_repoArrets, _repoLiaisons));
         }
     }
 }
