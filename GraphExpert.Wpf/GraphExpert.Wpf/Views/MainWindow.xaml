@@ -4,9 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:local="clr-namespace:GraphExpert.Wpf.ViewModels"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="GraphExpert" Height="350" Width="525">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding Path=Formes}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MouseDown="Canvas_MouseDown" Background="Transparent" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=OneWay}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=OneWay}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:StopVM}">
+                    <Grid>
+                        <Ellipse Height="30"
+                                 Width="30"
+                                 Fill="Transparent"
+                                 Stroke="Black"
+                                 StrokeThickness="1" />
+                        <TextBlock Text="{Binding Path=Id, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <GroupBox Grid.Row="1" Header="Éléments">
+            <ListView ItemsSource="{Binding Path=Formes}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="N°" DisplayMemberBinding="{Binding Path=Id}" />
+                        <GridViewColumn Header="Étiquette" DisplayMemberBinding="{Binding Path=Etiquette}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
     </Grid>
 </Window>
