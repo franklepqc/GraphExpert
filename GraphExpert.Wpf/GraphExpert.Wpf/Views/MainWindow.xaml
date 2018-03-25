@@ -18,7 +18,7 @@
         <ItemsControl Grid.Row="0" ItemsSource="{Binding Path=Formes}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MouseDown="Canvas_MouseDown" Background="Transparent" />
+                    <Canvas IsItemsHost="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MouseLeftButtonDown="SurClicBoutonGauche" Background="Transparent" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
@@ -54,6 +54,11 @@
                     </local:SelecteurDataTemplate.TemplateLiaison>
                 </local:SelecteurDataTemplate>
             </ItemsControl.ItemTemplateSelector>
+            <ItemsControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Nettoyer" Command="{Binding Path=CommandeNettoyer, Mode=OneWay}" />
+                </ContextMenu>
+            </ItemsControl.ContextMenu>
         </ItemsControl>
 
         <Grid Grid.Row="1">
@@ -79,7 +84,9 @@
                 </Grid>
             </GroupBox>
 
-            <TextBlock Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
+            <GroupBox Grid.Column="1" Header="Solution">
+                <TextBlock VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
+            </GroupBox>
         </Grid>
     </Grid>
 </Window>

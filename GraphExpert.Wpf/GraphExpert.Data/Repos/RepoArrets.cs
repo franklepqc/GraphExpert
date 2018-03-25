@@ -38,5 +38,13 @@ namespace GraphExpert.Data.Repos
         {
             _arrets.Remove(_arrets.Single(p => p.Id == id));
         }
+
+        /// <summary>
+        /// Vider les objets persistés.
+        /// </summary>
+        public void Vider()
+        {
+            _arrets.Clear();
+        }
     }
 }

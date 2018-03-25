@@ -9,5 +9,7 @@ namespace GraphExpert.Data.Interfaces.Repos
         void AugmenterPoids(byte idDepart, byte idArrivee, int poids = 1);
 
         void Supprimer(byte idDepart, byte idArrivee);
+
+        void Vider();
     }
 }

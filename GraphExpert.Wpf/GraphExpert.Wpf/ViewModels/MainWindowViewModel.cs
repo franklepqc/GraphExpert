@@ -19,6 +19,11 @@ namespace GraphExpert.Wpf.ViewModels
         private IRepoLiaisons _repoLiaisons;
 
         /// <summary>
+        /// Arrêt n°1 cliqué.
+        /// </summary>
+        private StopVM _arret1;
+
+        /// <summary>
         /// Formes à afficher.
         /// </summary>
         public ObservableCollection<object> Formes { get; private set; } = new ObservableCollection<object>();
@@ -27,6 +32,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// Bouton 'résoudre'.
         /// </summary>
         public ICommand CommandeResoudre { get; private set; }
+
+        /// <summary>
+        /// Menu contextuel 'Nettoyer'.
+        /// </summary>
+        public ICommand CommandeNettoyer { get; private set; }
 
         /// <summary>
         /// Constructeur par défaut.
@@ -40,6 +50,7 @@ namespace GraphExpert.Wpf.ViewModels
 
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(() => { }, () => false);
+            CommandeNettoyer = new DelegateCommand(Nettoyer);
         }
 
         /// <summary>
@@ -63,14 +74,41 @@ namespace GraphExpert.Wpf.ViewModels
         /// <param name="arret1">Arrêt de départ.</param>
         /// <param name="arret2">Arrêt d'arrivée.</param>
         /// <returns>Vrai si la liaison est effective.</returns>
-        public bool AjouterLiaison(StopVM arret1, StopVM arret2)
+        public void AjouterLiaison(StopVM arret)
         {
-            // Ajout aux éléments à afficher.
-            Formes.Add(new LineVM(arret1, arret2));
+            // Il s'agit du premier clic.
+            if (null == _arret1)
+            {
+                _arret1 = arret;
+            }
+            // Il s'agit du deuxième ; on crée la liaison.
+            else
+            {
+                // Ajout aux éléments à afficher.
+                Formes.Add(new LineVM(_arret1, arret));
 
-            // Afficher.
-            _repoLiaisons.Ajouter(arret1.Id, arret2.Id);
-            return true;
+                // Afficher.
+                _repoLiaisons.Ajouter(_arret1.Id, arret.Id);
+
+                // Retirer l'arrêt.
+                _arret1 = null;
+            }
+        }
+
+        /// <summary>
+        /// Nettoyer le tout.
+        /// </summary>
+        public void Nettoyer()
+        {
+            // Vider les repos.
+            _repoArrets.Vider();
+            _repoLiaisons.Vider();
+
+            // Vider l'instance en mémoire d'un arrêt cliqué.
+            _arret1 = null;
+
+            // Vider l'IU.
+            Formes.Clear();
         }
     }
 }

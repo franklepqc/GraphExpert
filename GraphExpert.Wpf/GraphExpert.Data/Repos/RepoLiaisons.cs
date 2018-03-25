@@ -77,5 +77,13 @@ namespace GraphExpert.Data.Repos
         /// <param name="idArrivee">Point d'arrivée.</param>
         /// <returns>Liaison unique.</returns>
         private ILiaison Obtenir(byte idDepart, byte idArrivee) => _liaisons.SingleOrDefault(k => k.ArretIdDepart == idDepart && k.ArretIdArrivee == idArrivee);
+
+        /// <summary>
+        /// Vider les objets persistés.
+        /// </summary>
+        public void Vider()
+        {
+            _liaisons.Clear();
+        }
     }
 }

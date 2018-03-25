@@ -10,8 +10,6 @@ namespace GraphExpert.Wpf.Views
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
-        private StopVM _arret1;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -19,7 +17,7 @@ namespace GraphExpert.Wpf.Views
 
         public MainWindowViewModel Modele => DataContext as MainWindowViewModel;
 
-        private void Canvas_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void SurClicBoutonGauche(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.OriginalSource.GetType() == typeof(Canvas))
             {
@@ -27,19 +25,9 @@ namespace GraphExpert.Wpf.Views
 
                 Modele.AjouterArret(position.X - 15, position.Y - 15, string.Empty);
             }
-            else if (_arret1 == null)
-            {
-                _arret1 = ObtenirStop(e.OriginalSource);
-            }
             else
             {
-                var arret2 = ObtenirStop(e.OriginalSource);
-
-                // Faire la liaison.
-                if (Modele.AjouterLiaison(_arret1, arret2))
-                {
-                    _arret1 = null;
-                }
+                Modele.AjouterLiaison(ObtenirStop(e.OriginalSource));
             }
         }
 

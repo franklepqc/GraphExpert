@@ -7,5 +7,7 @@ namespace GraphExpert.Data.Interfaces.Repos
         IArret Ajouter(string etiquette);
 
         void Supprimer(byte id);
+
+        void Vider();
     }
 }
