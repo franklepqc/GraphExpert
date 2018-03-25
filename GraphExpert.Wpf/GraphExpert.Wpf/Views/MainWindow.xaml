@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:local="clr-namespace:GraphExpert.Wpf.ViewModels"
+        xmlns:local="clr-namespace:GraphExpert.Wpf"
+        xmlns:vms="clr-namespace:GraphExpert.Wpf.Models"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="GraphExpert" Height="350" Width="525">
@@ -26,18 +27,33 @@
                     <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=OneWay}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:StopVM}">
-                    <Grid>
-                        <Ellipse Height="30"
-                                 Width="30"
-                                 Fill="Transparent"
-                                 Stroke="Black"
-                                 StrokeThickness="1" />
-                        <TextBlock Text="{Binding Path=Id, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemTemplateSelector>
+                <local:SelecteurDataTemplate>
+                    <local:SelecteurDataTemplate.TemplateArret>
+                        <DataTemplate DataType="{x:Type vms:StopVM}">
+                            <Grid>
+                                <Ellipse Height="30"
+                                         Width="30"
+                                         Fill="White"
+                                         Stroke="Black"
+                                         StrokeThickness="1" />
+                                <TextBlock Text="{Binding Path=Id, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </local:SelecteurDataTemplate.TemplateArret>
+                    <local:SelecteurDataTemplate.TemplateLiaison>
+                        <DataTemplate DataType="{x:Type vms:LineVM}">
+                            <Line X1="{Binding Path=X1}"
+                                  Y1="{Binding Path=Y1}"
+                                  X2="{Binding Path=X2}"
+                                  Y2="{Binding Path=Y2}"
+                                  Stroke="Black"
+                                  StrokeThickness="1"
+                                  />
+                        </DataTemplate>
+                    </local:SelecteurDataTemplate.TemplateLiaison>
+                </local:SelecteurDataTemplate>
+            </ItemsControl.ItemTemplateSelector>
         </ItemsControl>
 
         <Grid Grid.Row="1">
@@ -46,29 +62,24 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="Éléments">
-                <ListView ItemsSource="{Binding Path=Formes}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="N°" DisplayMemberBinding="{Binding Path=Id}" />
-                            <GridViewColumn Header="Étiquette" DisplayMemberBinding="{Binding Path=Etiquette}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </GroupBox>
-
-            <GroupBox Grid.Column="1" Header="Algorithmique">
+            <GroupBox Grid.Column="0" Header="Algorithmique">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" Content="Résoudre" Command="{Binding Path=CommandeResoudre, Mode=OneWay}" />
+                    <Button Grid.Row="1" Content="Résoudre" Command="{Binding Path=CommandeResoudre, Mode=OneWay}" />
 
-                    <TextBlock Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <RadioButton GroupName="Algo" Content="A01" IsChecked="True" />
+                        <RadioButton GroupName="Algo" Content="A02" />
+                        <RadioButton GroupName="Algo" Content="A03" />
+                    </StackPanel>
                 </Grid>
             </GroupBox>
+
+            <TextBlock Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
         </Grid>
     </Grid>
 </Window>

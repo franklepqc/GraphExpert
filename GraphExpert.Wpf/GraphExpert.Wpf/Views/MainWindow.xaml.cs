@@ -1,4 +1,5 @@
-﻿using GraphExpert.Wpf.ViewModels;
+﻿using GraphExpert.Wpf.Models;
+using GraphExpert.Wpf.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -35,7 +36,10 @@ namespace GraphExpert.Wpf.Views
                 var arret2 = ObtenirStop(e.OriginalSource);
 
                 // Faire la liaison.
-                if (Modele.AjouterLiaison(_arret1, arret2)) _arret1 = null;
+                if (Modele.AjouterLiaison(_arret1, arret2))
+                {
+                    _arret1 = null;
+                }
             }
         }
 

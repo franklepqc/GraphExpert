@@ -1,4 +1,5 @@
 ﻿using GraphExpert.Data.Interfaces.Repos;
+using GraphExpert.Wpf.Models;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -20,7 +21,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Formes à afficher.
         /// </summary>
-        public ObservableCollection<StopVM> Formes { get; private set; } = new ObservableCollection<StopVM>();
+        public ObservableCollection<object> Formes { get; private set; } = new ObservableCollection<object>();
 
         /// <summary>
         /// Bouton 'résoudre'.
@@ -64,6 +65,10 @@ namespace GraphExpert.Wpf.ViewModels
         /// <returns>Vrai si la liaison est effective.</returns>
         public bool AjouterLiaison(StopVM arret1, StopVM arret2)
         {
+            // Ajout aux éléments à afficher.
+            Formes.Add(new LineVM(arret1, arret2));
+
+            // Afficher.
             _repoLiaisons.Ajouter(arret1.Id, arret2.Id);
             return true;
         }

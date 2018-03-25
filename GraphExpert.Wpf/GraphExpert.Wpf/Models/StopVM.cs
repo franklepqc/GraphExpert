@@ -1,4 +1,4 @@
-﻿namespace GraphExpert.Wpf.ViewModels
+﻿namespace GraphExpert.Wpf.Models
 {
     public class StopVM
     {
