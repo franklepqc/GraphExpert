@@ -1,8 +1,10 @@
-﻿using GraphExpert.Data.Interfaces.Repos;
+﻿using GraphExpert.Algorithmes.Interfaces;
+using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Models;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Linq;
 
 namespace GraphExpert.Wpf.ViewModels
 {
@@ -19,9 +21,61 @@ namespace GraphExpert.Wpf.ViewModels
         private IRepoLiaisons _repoLiaisons;
 
         /// <summary>
+        /// Résolveur.
+        /// </summary>
+        private IResolveur _resolveur;
+
+        /// <summary>
         /// Arrêt n°1 cliqué.
         /// </summary>
         private StopVM _arret1;
+
+        /// <summary>
+        /// Algorithme sélectionné.
+        /// </summary>
+        private TypeAlogorithmeEnum _algorithme = TypeAlogorithmeEnum.FloydWarshall;
+
+        /// <summary>
+        /// Sélection du choix.
+        /// </summary>
+        public bool EstAlgoFW
+        {
+            get { return _algorithme == TypeAlogorithmeEnum.FloydWarshall; }
+            set
+            {
+                SetProperty(ref _algorithme, TypeAlogorithmeEnum.FloydWarshall, @"EstAlgoFW");
+                RaisePropertyChanged(@"EstAlgoDFS");
+                RaisePropertyChanged(@"EstAlgoBFS");
+            }
+        }
+
+        /// <summary>
+        /// Sélection du choix.
+        /// </summary>
+        public bool EstAlgoDFS
+        {
+            get { return _algorithme == TypeAlogorithmeEnum.DFS; }
+            set
+            {
+                SetProperty(ref _algorithme, TypeAlogorithmeEnum.DFS, @"EstAlgoDFS");
+                RaisePropertyChanged(@"EstAlgoFW");
+                RaisePropertyChanged(@"EstAlgoBFS");
+            }
+        }
+
+        /// <summary>
+        /// Sélection du choix.
+        /// </summary>
+        public bool EstAlgoBFS
+        {
+            get { return _algorithme == TypeAlogorithmeEnum.BFS; }
+            set
+            {
+                SetProperty(ref _algorithme, TypeAlogorithmeEnum.BFS, @"EstAlgoBFS");
+                RaisePropertyChanged(@"EstAlgoDFS");
+                RaisePropertyChanged(@"EstAlgoFW");
+            }
+        }
 
         /// <summary>
         /// Formes à afficher.
@@ -43,13 +97,15 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         /// <param name="repoArrets">Repository des arrêts.</param>
         /// <param name="repoLiaisons">Repository des liaisons.</param>
-        public MainWindowViewModel(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons)
+        /// <param name="resolveur">Résoudre par l'algorithme voulu.</param>
+        public MainWindowViewModel(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons, IResolveur resolveur)
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;
+            _resolveur = resolveur;
 
             // Initialisation des commandes.
-            CommandeResoudre = new DelegateCommand(() => { }, () => false);
+            CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
         }
 
@@ -109,6 +165,22 @@ namespace GraphExpert.Wpf.ViewModels
 
             // Vider l'IU.
             Formes.Clear();
+        }
+        
+        /// <summary>
+        /// Résoudre par l'algorithme choisi.
+        /// </summary>
+        public bool PeutResoudre()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Résoudre par l'algorithme choisi.
+        /// </summary>
+        public void Resoudre()
+        {
+            _resolveur.Resoudre(_algorithme, null);
         }
     }
 }

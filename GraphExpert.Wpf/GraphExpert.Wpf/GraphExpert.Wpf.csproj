@@ -125,6 +125,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\GraphExpert.Algorithmes.Interfaces\GraphExpert.Algorithmes.Interfaces.csproj">
+      <Project>{943d3f23-2d69-4d10-9429-69b2143ee67d}</Project>
+      <Name>GraphExpert.Algorithmes.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphExpert.Algorithmes\GraphExpert.Algorithmes.csproj">
+      <Project>{1277b1e7-f4e0-4c39-add6-bb879d788903}</Project>
+      <Name>GraphExpert.Algorithmes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphExpert.Data.Interfaces\GraphExpert.Data.Interfaces.csproj">
       <Project>{d066580b-9886-487f-a3e1-6d856039fd65}</Project>
       <Name>GraphExpert.Data.Interfaces</Name>

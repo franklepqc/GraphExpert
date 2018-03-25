@@ -77,9 +77,14 @@
                     <Button Grid.Row="1" Content="Résoudre" Command="{Binding Path=CommandeResoudre, Mode=OneWay}" />
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <RadioButton GroupName="Algo" Content="A01" IsChecked="True" />
-                        <RadioButton GroupName="Algo" Content="A02" />
-                        <RadioButton GroupName="Algo" Content="A03" />
+                        <StackPanel.Resources>
+                            <Style TargetType="RadioButton">
+                                <Setter Property="Margin" Value="10" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <RadioButton Content="Floyd-Warshall" IsChecked="{Binding Path=EstAlgoFW}" />
+                        <RadioButton Content="DFS" IsChecked="{Binding Path=EstAlgoDFS}" />
+                        <RadioButton Content="BFS" IsChecked="{Binding Path=EstAlgoBFS}" />
                     </StackPanel>
                 </Grid>
             </GroupBox>

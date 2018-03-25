@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Data.Interfaces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Data", "GraphExpert.Data\GraphExpert.Data.csproj", "{01A78403-1FE5-4333-9950-4244A1FB8173}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Algorithmes", "GraphExpert.Algorithmes\GraphExpert.Algorithmes.csproj", "{1277B1E7-F4E0-4C39-ADD6-BB879D788903}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Algorithmes.Interfaces", "GraphExpert.Algorithmes.Interfaces\GraphExpert.Algorithmes.Interfaces.csproj", "{943D3F23-2D69-4D10-9429-69B2143EE67D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{01A78403-1FE5-4333-9950-4244A1FB8173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01A78403-1FE5-4333-9950-4244A1FB8173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01A78403-1FE5-4333-9950-4244A1FB8173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1277B1E7-F4E0-4C39-ADD6-BB879D788903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1277B1E7-F4E0-4C39-ADD6-BB879D788903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1277B1E7-F4E0-4C39-ADD6-BB879D788903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1277B1E7-F4E0-4C39-ADD6-BB879D788903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
