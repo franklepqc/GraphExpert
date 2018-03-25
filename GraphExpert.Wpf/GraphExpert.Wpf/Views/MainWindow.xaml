@@ -40,15 +40,35 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <GroupBox Grid.Row="1" Header="Éléments">
-            <ListView ItemsSource="{Binding Path=Formes}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="N°" DisplayMemberBinding="{Binding Path=Id}" />
-                        <GridViewColumn Header="Étiquette" DisplayMemberBinding="{Binding Path=Etiquette}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Header="Éléments">
+                <ListView ItemsSource="{Binding Path=Formes}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="N°" DisplayMemberBinding="{Binding Path=Id}" />
+                            <GridViewColumn Header="Étiquette" DisplayMemberBinding="{Binding Path=Etiquette}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Header="Algorithmique">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="0" Content="Résoudre" Command="{Binding Path=CommandeResoudre, Mode=OneWay}" />
+
+                    <TextBlock Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBlock>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>

@@ -1,5 +1,7 @@
 ﻿using GraphExpert.Data.Interfaces.Repos;
+using Prism.Commands;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace GraphExpert.Wpf.ViewModels
 {
@@ -21,6 +23,11 @@ namespace GraphExpert.Wpf.ViewModels
         public ObservableCollection<StopVM> Formes { get; private set; } = new ObservableCollection<StopVM>();
 
         /// <summary>
+        /// Bouton 'résoudre'.
+        /// </summary>
+        public ICommand CommandeResoudre { get; private set; }
+
+        /// <summary>
         /// Constructeur par défaut.
         /// </summary>
         /// <param name="repoArrets">Repository des arrêts.</param>
@@ -29,6 +36,9 @@ namespace GraphExpert.Wpf.ViewModels
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;
+
+            // Initialisation des commandes.
+            CommandeResoudre = new DelegateCommand(() => { }, () => false);
         }
 
         /// <summary>
