@@ -23,8 +23,8 @@ namespace GraphExpert.Wpf
             base.ConfigureContainer();
 
             // Injection de dépendances.
-            Container.RegisterType<IRepoArrets, RepoArrets>();
-            Container.RegisterType<IRepoLiaisons, RepoLiaisons>();
+            Container.RegisterType<IRepoNoeuds, RepoNoeuds>();
+            Container.RegisterType<IRepoAretes, RepoAretes>();
 
             Container.RegisterType<IAlgorithmeFW, AlgorithmeFW>();
             Container.RegisterType<IAlgorithmeDFS, AlgorithmeDFS>();

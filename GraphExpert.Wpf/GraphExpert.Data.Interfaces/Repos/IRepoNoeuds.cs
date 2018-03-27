@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace GraphExpert.Data.Interfaces.Repos
 {
-    public interface IRepoArrets
+    public interface IRepoNoeuds
     {
-        IArret Ajouter(string etiquette);
+        INoeud Ajouter(string etiquette);
 
         void Supprimer(byte id);
 
         void Vider();
 
-        IEnumerable<IArret> Obtenir();
+        IEnumerable<INoeud> Obtenir();
     }
 }

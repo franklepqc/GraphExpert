@@ -4,6 +4,6 @@ namespace GraphExpert.Data.Interfaces
 {
     public interface IFabriqueMatricePoids
     {
-        int[][] Obtenir(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons);
+        int[][] Obtenir(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons);
     }
 }

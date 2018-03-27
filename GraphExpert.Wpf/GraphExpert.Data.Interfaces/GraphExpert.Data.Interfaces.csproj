@@ -41,11 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IFabriqueMatricePoids.cs" />
-    <Compile Include="Modeles\IArret.cs" />
-    <Compile Include="Modeles\ILiaison.cs" />
+    <Compile Include="Modeles\IArete.cs" />
+    <Compile Include="Modeles\INoeud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repos\IRepoArrets.cs" />
-    <Compile Include="Repos\IRepoLiaisons.cs" />
+    <Compile Include="Repos\IRepoAretes.cs" />
+    <Compile Include="Repos\IRepoNoeuds.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

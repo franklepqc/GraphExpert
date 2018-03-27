@@ -2,13 +2,13 @@
 
 namespace GraphExpert.Data.Modeles
 {
-    public class Liaison : ILiaison
+    public class Arete : IArete
     {
         private byte _arretIdDepart,
                      _arretIdArrivee;
         private int _poids;
 
-        public Liaison(byte arretIdDepart, byte arretIdArrivee, int poids)
+        public Arete(byte arretIdDepart, byte arretIdArrivee, int poids)
         {
             _arretIdDepart = arretIdDepart;
             _arretIdArrivee = arretIdArrivee;

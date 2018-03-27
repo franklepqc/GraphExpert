@@ -1,6 +1,6 @@
 ﻿namespace GraphExpert.Data.Interfaces.Modeles
 {
-    public interface ILiaison
+    public interface IArete
     {
         byte ArretIdDepart { get; }
         byte ArretIdArrivee { get; }

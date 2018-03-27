@@ -41,11 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FabriqueMatricePoids.cs" />
-    <Compile Include="Modeles\Arret.cs" />
-    <Compile Include="Modeles\Liaison.cs" />
+    <Compile Include="Modeles\Arete.cs" />
+    <Compile Include="Modeles\Noeud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repos\RepoArrets.cs" />
-    <Compile Include="Repos\RepoLiaisons.cs" />
+    <Compile Include="Repos\RepoAretes.cs" />
+    <Compile Include="Repos\RepoNoeuds.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphExpert.Data.Interfaces\GraphExpert.Data.Interfaces.csproj">

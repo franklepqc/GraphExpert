@@ -17,8 +17,8 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Repos.
         /// </summary>
-        private IRepoArrets _repoArrets;
-        private IRepoLiaisons _repoLiaisons;
+        private IRepoNoeuds _repoArrets;
+        private IRepoAretes _repoLiaisons;
 
         /// <summary>
         /// Résolveur.
@@ -104,7 +104,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <param name="repoLiaisons">Repository des liaisons.</param>
         /// <param name="resolveur">Résoudre par l'algorithme voulu.</param>
         /// <param name="fabriqueMatricePoids">Fabrique de la matrice de poids.</param>
-        public MainWindowViewModel(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons, IResolveur resolveur, IFabriqueMatricePoids fabriqueMatricePoids)
+        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IResolveur resolveur, IFabriqueMatricePoids fabriqueMatricePoids)
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;

@@ -9,21 +9,21 @@ namespace GraphExpert.Data.Repos
     /// <summary>
     /// Repository des arrêts.
     /// </summary>
-    public class RepoArrets : IRepoArrets
+    public class RepoNoeuds : IRepoNoeuds
     {
         /// <summary>
         /// Conteneur.
         /// </summary>
-        private IList<IArret> _arrets = new List<IArret>();
+        private IList<INoeud> _arrets = new List<INoeud>();
 
         /// <summary>
         /// Ajoute un nouvel arrêt.
         /// </summary>
         /// <param name="etiquette">Étiquette.</param>
         /// <returns>Le nouvel arrêt.</returns>
-        public IArret Ajouter(string etiquette)
+        public INoeud Ajouter(string etiquette)
         {
-            var arret = new Arret((_arrets.Any() ? (byte)(_arrets.Max(k => k.Id) + 1) : (byte)1), etiquette);
+            var arret = new Noeud((_arrets.Any() ? (byte)(_arrets.Max(k => k.Id) + 1) : (byte)1), etiquette);
 
             _arrets.Add(arret);
 
@@ -34,7 +34,7 @@ namespace GraphExpert.Data.Repos
         /// Obtenir tous les arrêts.
         /// </summary>
         /// <returns>Arrêts</returns>
-        public IEnumerable<IArret> Obtenir() => _arrets;
+        public IEnumerable<INoeud> Obtenir() => _arrets;
 
         /// <summary>
         /// Retire l'arrêt en question.

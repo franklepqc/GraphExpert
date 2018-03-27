@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace GraphExpert.Data.Interfaces.Repos
 {
-    public interface IRepoLiaisons
+    public interface IRepoAretes
     {
-        ILiaison Ajouter(byte idDepart, byte idArrivee);
+        IArete Ajouter(byte idDepart, byte idArrivee);
 
         void AugmenterPoids(byte idDepart, byte idArrivee, int poids = 1);
 
@@ -13,6 +13,6 @@ namespace GraphExpert.Data.Interfaces.Repos
 
         void Vider();
 
-        IEnumerable<ILiaison> Obtenir();
+        IEnumerable<IArete> Obtenir();
     }
 }

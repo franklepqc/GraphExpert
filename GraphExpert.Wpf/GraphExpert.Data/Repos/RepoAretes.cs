@@ -10,12 +10,12 @@ namespace GraphExpert.Data.Repos
     /// <summary>
     /// Repository des liaisons.
     /// </summary>
-    public class RepoLiaisons : IRepoLiaisons
+    public class RepoAretes : IRepoAretes
     {
         /// <summary>
         /// Conteneur.
         /// </summary>
-        private IList<ILiaison> _liaisons = new List<ILiaison>();
+        private IList<IArete> _liaisons = new List<IArete>();
 
         /// <summary>
         /// Ajoute une nouvelle liaison.
@@ -23,13 +23,13 @@ namespace GraphExpert.Data.Repos
         /// <param name="idDepart">Point de départ.</param>
         /// <param name="idArrivee">Point d'arrivée.</param>
         /// <returns>Nouvelle liaison.</returns>
-        public ILiaison Ajouter(byte idDepart, byte idArrivee)
+        public IArete Ajouter(byte idDepart, byte idArrivee)
         {
             var liaison = Obtenir(idDepart, idArrivee);
 
             if (null == liaison)
             {
-                liaison = new Liaison(idDepart, idArrivee, 1);
+                liaison = new Arete(idDepart, idArrivee, 1);
 
                 _liaisons.Add(liaison);
             }
@@ -76,7 +76,7 @@ namespace GraphExpert.Data.Repos
         /// <param name="idDepart">Point de départ.</param>
         /// <param name="idArrivee">Point d'arrivée.</param>
         /// <returns>Liaison unique.</returns>
-        private ILiaison Obtenir(byte idDepart, byte idArrivee) => _liaisons.SingleOrDefault(k => k.ArretIdDepart == idDepart && k.ArretIdArrivee == idArrivee);
+        private IArete Obtenir(byte idDepart, byte idArrivee) => _liaisons.SingleOrDefault(k => k.ArretIdDepart == idDepart && k.ArretIdArrivee == idArrivee);
 
         /// <summary>
         /// Vider les objets persistés.
@@ -90,6 +90,6 @@ namespace GraphExpert.Data.Repos
         /// Obtenir toutes les liaisons.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ILiaison> Obtenir() => _liaisons;
+        public IEnumerable<IArete> Obtenir() => _liaisons;
     }
 }

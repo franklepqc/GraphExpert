@@ -2,14 +2,14 @@
 
 namespace GraphExpert.Data.Modeles
 {
-    public class Arret : IArret
+    public class Noeud : INoeud
     {
-        private Arret()
+        private Noeud()
         {
 
         }
 
-        public Arret(byte id, string etiquette)
+        public Noeud(byte id, string etiquette)
         {
             Id = id;
             Etiquette = etiquette;

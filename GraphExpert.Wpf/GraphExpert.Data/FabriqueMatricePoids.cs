@@ -7,7 +7,7 @@ namespace GraphExpert.Data
 {
     public class FabriqueMatricePoids : IFabriqueMatricePoids
     {
-        public int[][] Obtenir(IRepoArrets repoArrets, IRepoLiaisons repoLiaisons)
+        public int[][] Obtenir(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons)
         {
             var arrets = repoArrets.Obtenir();
             var liaisons = repoLiaisons.Obtenir();
