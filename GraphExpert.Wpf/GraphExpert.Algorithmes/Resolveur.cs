@@ -26,10 +26,9 @@ namespace GraphExpert.Algorithmes
         /// </summary>
         /// <param name="type">Type algorithme.</param>
         /// <param name="matrice">Matrice des poids selon les arrêts et leurs liaisons.</param>
-        public void Resoudre(TypeAlogorithmeEnum type, int[][] matrice)
+        public void Resoudre(TypeAlogorithmeEnum type)
         {
-            var algo = _strategie.Obtenir(type);
-            algo.Resoudre(matrice);
+            _strategie.Obtenir(type).Resoudre();
         }
     }
 }

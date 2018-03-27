@@ -2,6 +2,6 @@
 {
     public interface IResolveur
     {
-        void Resoudre(TypeAlogorithmeEnum type, int[][] matrice);
+        void Resoudre(TypeAlogorithmeEnum type);
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IAlgorithme
     {
-        void Resoudre(int[][] matricePoids);
+        void Resoudre();
     }
 }

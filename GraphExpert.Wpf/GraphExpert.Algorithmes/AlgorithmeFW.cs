@@ -7,8 +7,7 @@ namespace GraphExpert.Algorithmes
         /// <summary>
         /// Résoudre selon l'algorithme.
         /// </summary>
-        /// <param name="matricePoids">Matrice de poids.</param>
-        public void Resoudre(int[][] matricePoids)
+        public void Resoudre()
         {
             throw new System.NotImplementedException();
         }

@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FabriqueMatricePoids.cs" />
     <Compile Include="Modeles\Arete.cs" />
     <Compile Include="Modeles\Noeud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

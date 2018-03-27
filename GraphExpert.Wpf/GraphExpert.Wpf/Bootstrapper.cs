@@ -31,8 +31,6 @@ namespace GraphExpert.Wpf
             Container.RegisterType<IAlgorithmeBFS, AlgorithmeBFS>();
             Container.RegisterType<IStrategieAlgorithme, StrategieAlgorithme>();
             Container.RegisterType<IResolveur, Resolveur>();
-
-            Container.RegisterType<IFabriqueMatricePoids, FabriqueMatricePoids>();
         }
 
         protected override void InitializeModules()

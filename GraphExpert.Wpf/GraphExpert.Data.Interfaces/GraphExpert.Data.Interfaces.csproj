@@ -40,12 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IFabriqueMatricePoids.cs" />
+    <Compile Include="Modeles\IAgent.cs" />
     <Compile Include="Modeles\IArete.cs" />
     <Compile Include="Modeles\INoeud.cs" />
+    <Compile Include="Modeles\IPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repos\IRepoAgents.cs" />
     <Compile Include="Repos\IRepoAretes.cs" />
     <Compile Include="Repos\IRepoNoeuds.cs" />
+    <Compile Include="Repos\IRepoPorts.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

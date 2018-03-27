@@ -26,11 +26,6 @@ namespace GraphExpert.Wpf.ViewModels
         private IResolveur _resolveur;
 
         /// <summary>
-        /// Fabrique.
-        /// </summary>
-        private IFabriqueMatricePoids _fabriqueMatricePoids;
-
-        /// <summary>
         /// Arrêt n°1 cliqué.
         /// </summary>
         private StopVM _arret1;
@@ -103,13 +98,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// <param name="repoArrets">Repository des arrêts.</param>
         /// <param name="repoLiaisons">Repository des liaisons.</param>
         /// <param name="resolveur">Résoudre par l'algorithme voulu.</param>
-        /// <param name="fabriqueMatricePoids">Fabrique de la matrice de poids.</param>
-        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IResolveur resolveur, IFabriqueMatricePoids fabriqueMatricePoids)
+        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IResolveur resolveur)
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;
             _resolveur = resolveur;
-            _fabriqueMatricePoids = fabriqueMatricePoids;
 
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
@@ -187,7 +180,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void Resoudre()
         {
-            _resolveur.Resoudre(_algorithme, _fabriqueMatricePoids.Obtenir(_repoArrets, _repoLiaisons));
+            _resolveur.Resoudre(_algorithme);
         }
     }
 }
