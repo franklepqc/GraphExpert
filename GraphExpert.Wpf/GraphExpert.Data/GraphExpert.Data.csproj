@@ -40,11 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modeles\Agent.cs" />
     <Compile Include="Modeles\Arete.cs" />
     <Compile Include="Modeles\Noeud.cs" />
+    <Compile Include="Modeles\Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\RepoAretes.cs" />
+    <Compile Include="Repos\RepoAgents.cs" />
     <Compile Include="Repos\RepoNoeuds.cs" />
+    <Compile Include="Repos\RepoPorts.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphExpert.Data.Interfaces\GraphExpert.Data.Interfaces.csproj">
