@@ -6,6 +6,7 @@ using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GraphExpert.Wpf.ViewModels
 {
@@ -20,6 +21,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         private IRepoNoeuds _repoArrets;
         private IRepoAretes _repoLiaisons;
+        private IRepoAgents _repoAgents;
 
         /// <summary>
         /// Résolveur.
@@ -50,13 +52,19 @@ namespace GraphExpert.Wpf.ViewModels
             }
         }
 
-        internal void AjouterAgent(double x, double y)
+        /// <summary>
+        /// Ajouter un agent.
+        /// </summary>
+        /// <param name="x">Coordonnée X à l'écran.</param>
+        /// <param name="y">Coordonnée Y à l'écran.</param>
+        /// <param name="noeudId">N° du noeud.</param>
+        internal void AjouterAgent(double x, double y, int noeudId)
         {
             // Ajout dans la persistance.
-            //var agent = _repoAgents.Ajouter(etiquette);
+            var agent = _repoAgents.Ajouter(noeudId);
 
             // Afficher.
-            Formes.Add(new AgentVM(x, y));
+            Formes.Add(new AgentVM(x, y, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
         }
 
         /// <summary>
@@ -107,11 +115,13 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         /// <param name="repoArrets">Repository des arrêts.</param>
         /// <param name="repoLiaisons">Repository des liaisons.</param>
+        /// <param name="repoAgents">Repository des agents.</param>
         /// <param name="resolveur">Résoudre par l'algorithme voulu.</param>
-        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IResolveur resolveur)
+        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IRepoAgents repoAgents, IResolveur resolveur)
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;
+            _repoAgents = repoAgents;
             _resolveur = resolveur;
 
             // Initialisation des commandes.

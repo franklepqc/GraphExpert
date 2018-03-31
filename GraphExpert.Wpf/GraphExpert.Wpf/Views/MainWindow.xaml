@@ -33,7 +33,7 @@
                     </local:SelecteurDataTemplate.TemplateArret>
                     <local:SelecteurDataTemplate.TemplateAgent>
                         <DataTemplate DataType="{x:Type vms:AgentVM}">
-                            <controles:Agent Left="{Binding Path=X}" Top="{Binding Path=Y}" />
+                            <controles:Agent Left="{Binding Path=X}" Top="{Binding Path=Y}" Couleur="{Binding Path=Couleur}" />
                         </DataTemplate>
                     </local:SelecteurDataTemplate.TemplateAgent>
                     <local:SelecteurDataTemplate.TemplateLiaison>

@@ -5,5 +5,7 @@
         int Id { get; }
 
         int NoeudId { get; set; }
+
+        string Couleur { get; }
     }
 }

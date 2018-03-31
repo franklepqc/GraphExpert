@@ -16,6 +16,14 @@ namespace GraphExpert.Data.Repos
         /// </summary>
         private IList<IAgent> _agents = new List<IAgent>();
 
+        private string[] _couleurs = new string[]
+        {
+            "#000000",
+            "#FFFFFF"
+        };
+
+        private int _indexCouleurs = 0;
+
         /// <summary>
         /// Ajoute un nouvel agent.
         /// </summary>
@@ -23,7 +31,10 @@ namespace GraphExpert.Data.Repos
         /// <returns>Le nouvel agent.</returns>
         public IAgent Ajouter(int noeudId)
         {
-            var agent = new Agent((_agents.Any() ? (_agents.Max(k => k.Id) + 1) : 1), noeudId);
+            var id = (_agents.Any() ? (_agents.Max(k => k.Id) + 1) : 1);
+            var couleur = _couleurs[_indexCouleurs++];
+
+            var agent = new Agent(id, noeudId, couleur);
 
             _agents.Add(agent);
 
