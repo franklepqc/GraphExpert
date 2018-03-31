@@ -79,9 +79,24 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controles\Agent.xaml.cs">
+      <DependentUpon>Agent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controles\Noeud.xaml.cs">
+      <DependentUpon>Noeud.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\LineVM.cs" />
+    <Compile Include="Models\AgentVM.cs" />
     <Compile Include="SelecteurDataTemplate.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="Controles\Agent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controles\Noeud.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

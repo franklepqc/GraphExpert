@@ -31,6 +31,16 @@ namespace GraphExpert.Wpf.Views
             }
         }
 
+        private void SurClicBoutonDroit(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var noeud = ObtenirStop(e.OriginalSource);
+
+            if (null != noeud)
+            {
+                Modele.AjouterAgent(noeud.X, noeud.Y);
+            }
+        }
+
         private StopVM ObtenirStop(object element)
         {
             return (element as FrameworkElement).DataContext as StopVM;

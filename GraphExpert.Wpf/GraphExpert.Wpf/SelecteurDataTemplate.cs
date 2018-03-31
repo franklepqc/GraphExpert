@@ -10,6 +10,8 @@ namespace GraphExpert.Wpf
 
         public DataTemplate TemplateLiaison { get; set; }
 
+        public DataTemplate TemplateAgent { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item?.GetType() == typeof(StopVM))
@@ -19,6 +21,10 @@ namespace GraphExpert.Wpf
             else if (item?.GetType() == typeof(LineVM))
             {
                 return TemplateLiaison;
+            }
+            else if (item?.GetType() == typeof(AgentVM))
+            {
+                return TemplateAgent;
             }
 
             return base.SelectTemplate(item, container);

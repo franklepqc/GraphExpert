@@ -3,6 +3,7 @@ using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Models;
 using Prism.Commands;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -47,6 +48,15 @@ namespace GraphExpert.Wpf.ViewModels
                 RaisePropertyChanged(@"EstAlgoDFS");
                 RaisePropertyChanged(@"EstAlgoBFS");
             }
+        }
+
+        internal void AjouterAgent(double x, double y)
+        {
+            // Ajout dans la persistance.
+            //var agent = _repoAgents.Ajouter(etiquette);
+
+            // Afficher.
+            Formes.Add(new AgentVM(x, y));
         }
 
         /// <summary>

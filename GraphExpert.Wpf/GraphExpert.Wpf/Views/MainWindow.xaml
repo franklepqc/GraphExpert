@@ -6,9 +6,12 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:local="clr-namespace:GraphExpert.Wpf"
         xmlns:vms="clr-namespace:GraphExpert.Wpf.Models"
+        xmlns:controles="clr-namespace:GraphExpert.Wpf.Controles"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="GraphExpert" Height="350" Width="525">
+    <Window.Resources>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -18,29 +21,21 @@
         <ItemsControl Grid.Row="0" ItemsSource="{Binding Path=Formes}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MouseLeftButtonDown="SurClicBoutonGauche" Background="Transparent" />
+                    <Canvas IsItemsHost="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MouseLeftButtonDown="SurClicBoutonGauche" MouseRightButtonDown="SurClicBoutonDroit" Background="Transparent" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=OneWay}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=OneWay}" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplateSelector>
                 <local:SelecteurDataTemplate>
                     <local:SelecteurDataTemplate.TemplateArret>
                         <DataTemplate DataType="{x:Type vms:StopVM}">
-                            <Grid>
-                                <Ellipse Height="30"
-                                         Width="30"
-                                         Fill="White"
-                                         Stroke="Black"
-                                         StrokeThickness="1" />
-                                <TextBlock Text="{Binding Path=Id, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </Grid>
+                            <controles:Noeud Left="{Binding Path=X}" Top="{Binding Path=Y}" />
                         </DataTemplate>
                     </local:SelecteurDataTemplate.TemplateArret>
+                    <local:SelecteurDataTemplate.TemplateAgent>
+                        <DataTemplate DataType="{x:Type vms:AgentVM}">
+                            <controles:Agent Left="{Binding Path=X}" Top="{Binding Path=Y}" />
+                        </DataTemplate>
+                    </local:SelecteurDataTemplate.TemplateAgent>
                     <local:SelecteurDataTemplate.TemplateLiaison>
                         <DataTemplate DataType="{x:Type vms:LineVM}">
                             <Line X1="{Binding Path=X1}"
@@ -74,7 +69,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Button Grid.Row="1" Content="Résoudre" Command="{Binding Path=CommandeResoudre, Mode=OneWay}" />
+                    <Button x:Name="button" Grid.Row="1" Content="Résoudre" Command="{Binding Path=CommandeResoudre, Mode=OneWay}" />
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <StackPanel.Resources>
