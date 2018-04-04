@@ -4,21 +4,17 @@ namespace GraphExpert.Data.Modeles
 {
     public class Arete : IArete
     {
-        private byte _arretIdDepart,
-                     _arretIdArrivee;
-        private int _poids;
+        private byte _portIdDepart,
+                     _portIdArrivee;
 
-        public Arete(byte arretIdDepart, byte arretIdArrivee, int poids)
+        public Arete(byte portIdDepart, byte portIdArrivee)
         {
-            _arretIdDepart = arretIdDepart;
-            _arretIdArrivee = arretIdArrivee;
-            _poids = poids;
+            _portIdDepart = portIdDepart;
+            _portIdArrivee = portIdArrivee;
         }
 
-        public byte ArretIdDepart => _arretIdDepart;
+        public byte PortIdDepart => _portIdDepart;
 
-        public byte ArretIdArrivee => _arretIdArrivee;
-
-        public int Poids => _poids;
+        public byte PortIdArrivee => _portIdArrivee;
     }
 }

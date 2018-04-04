@@ -2,10 +2,7 @@
 {
     public interface IPort
     {
-        int Id { get; }
-
-        int NoeudId { get; set; }
-
-        int NoeudIdDest { get; set; }
+        byte Id { get; }
+        byte NoeudId { get; set; }
     }
 }

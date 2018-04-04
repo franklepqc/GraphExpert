@@ -7,9 +7,9 @@ namespace GraphExpert.Data.Interfaces.Repos
     {
         IEnumerable<IPort> Obtenir();
 
-        IPort Ajouter(int noeudId, int noeudIdDest);
+        IPort Ajouter(byte noeudId);
 
-        void Supprimer(int id);
+        void Supprimer(byte id, byte noeudId);
 
         void Vider();
     }

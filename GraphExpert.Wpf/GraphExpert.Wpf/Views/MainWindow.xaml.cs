@@ -1,7 +1,9 @@
-﻿using GraphExpert.Wpf.Models;
+﻿using GraphExpert.Wpf.Controles;
+using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace GraphExpert.Wpf.Views
 {
@@ -27,7 +29,16 @@ namespace GraphExpert.Wpf.Views
             }
             else
             {
-                Modele.AjouterLiaison(ObtenirStop(e.OriginalSource));
+                object obj = ObtenirAgent(e.OriginalSource);
+
+                if (null != obj)
+                {
+                    Modele.Deplacer(obj as AgentVM, 2);
+                }
+                else
+                {
+                    Modele.AjouterLiaison(ObtenirStop(e.OriginalSource));
+                }
             }
         }
 
@@ -39,6 +50,11 @@ namespace GraphExpert.Wpf.Views
             {
                 Modele.AjouterAgent(noeud.X, noeud.Y, noeud.Id);
             }
+        }
+        
+        private AgentVM ObtenirAgent(object element)
+        {
+            return (element as FrameworkElement).DataContext as AgentVM;
         }
 
         private StopVM ObtenirStop(object element)

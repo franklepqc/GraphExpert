@@ -5,11 +5,9 @@ namespace GraphExpert.Data.Interfaces.Repos
 {
     public interface IRepoAretes
     {
-        IArete Ajouter(byte idDepart, byte idArrivee);
+        IArete Ajouter(byte portIdDepart, byte portIdArrivee);
 
-        void AugmenterPoids(byte idDepart, byte idArrivee, int poids = 1);
-
-        void Supprimer(byte idDepart, byte idArrivee);
+        void Supprimer(byte portIdDepart, byte portIdArrivee);
 
         void Vider();
 

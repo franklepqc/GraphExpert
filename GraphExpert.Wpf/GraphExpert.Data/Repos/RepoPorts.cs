@@ -20,11 +20,10 @@ namespace GraphExpert.Data.Repos
         /// Ajoute un port au noeud.
         /// </summary>
         /// <param name="noeudId">N° du noeud attaché.</param>
-        /// <param name="noeudIdDest">N° du noeud de destination.</param>
         /// <returns>Port.</returns>
-        public IPort Ajouter(int noeudId, int noeudIdDest)
+        public IPort Ajouter(byte noeudId)
         {
-            var port = new Port((_ports.Any() ? (_ports.Max(k => k.Id) + 1) : 1), noeudId, noeudIdDest);
+            var port = new Port((byte)(_ports.Any() ? (_ports.Max(k => k.Id) + 1) : 1), noeudId);
 
             _ports.Add(port);
 
@@ -41,9 +40,10 @@ namespace GraphExpert.Data.Repos
         /// Supprimer le port.
         /// </summary>
         /// <param name="id">N° du port.</param>
-        public void Supprimer(int id)
+        /// <param name="noeudId">N° du noeud attaché.</param>
+        public void Supprimer(byte id, byte noeudId)
         {
-            _ports.Remove(_ports.Single(p => p.Id == id));
+            _ports.Remove(_ports.Single(p => p.Id == id && p.NoeudId == noeudId));
         }
 
         /// <summary>

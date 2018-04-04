@@ -2,9 +2,12 @@
 using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Models;
+using GraphExpert.Wpf.Services;
 using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -22,6 +25,7 @@ namespace GraphExpert.Wpf.ViewModels
         private IRepoNoeuds _repoArrets;
         private IRepoAretes _repoLiaisons;
         private IRepoAgents _repoAgents;
+        private IRepoPorts _repoPorts;
 
         /// <summary>
         /// Résolveur.
@@ -32,6 +36,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// Arrêt n°1 cliqué.
         /// </summary>
         private StopVM _arret1;
+
+        /// <summary>
+        /// Service de déplacement.
+        /// </summary>
+        private IAnimationDeplacement _animation;
 
         /// <summary>
         /// Algorithme sélectionné.
@@ -116,17 +125,31 @@ namespace GraphExpert.Wpf.ViewModels
         /// <param name="repoArrets">Repository des arrêts.</param>
         /// <param name="repoLiaisons">Repository des liaisons.</param>
         /// <param name="repoAgents">Repository des agents.</param>
+        /// <param name="repoPorts">Repository des ports.</param>
         /// <param name="resolveur">Résoudre par l'algorithme voulu.</param>
-        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IRepoAgents repoAgents, IResolveur resolveur)
+        /// <param name="animation">Animation.</param>
+        public MainWindowViewModel(IRepoNoeuds repoArrets, IRepoAretes repoLiaisons, IRepoAgents repoAgents, IRepoPorts repoPorts, IResolveur resolveur, IAnimationDeplacement animation)
         {
             _repoArrets = repoArrets;
             _repoLiaisons = repoLiaisons;
             _repoAgents = repoAgents;
+            _repoPorts = repoPorts;
             _resolveur = resolveur;
+            _animation = animation;
 
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
+        }
+
+        /// <summary>
+        /// Effectue le déplacement.
+        /// </summary>
+        /// <param name="agent">Agent à déplacer.</param>
+        /// <param name="noeudId">N° du noeud de destination.</param>
+        public async void Deplacer(AgentVM agent, byte noeudId)
+        {
+            await _animation.Executer(agent, Formes.OfType<StopVM>(), noeudId, 1);
         }
 
         /// <summary>
@@ -164,7 +187,9 @@ namespace GraphExpert.Wpf.ViewModels
                 Formes.Add(new LineVM(_arret1, arret));
 
                 // Afficher.
-                _repoLiaisons.Ajouter(_arret1.Id, arret.Id);
+                var portDepa = _repoPorts.Ajouter(_arret1.Id);
+                var portArri = _repoPorts.Ajouter(arret.Id);
+                _repoLiaisons.Ajouter(portDepa.Id, portArri.Id);
 
                 // Retirer l'arrêt.
                 _arret1 = null;

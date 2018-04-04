@@ -2,8 +2,7 @@
 {
     public interface IArete
     {
-        byte ArretIdDepart { get; }
-        byte ArretIdArrivee { get; }
-        int Poids { get; }
+        byte PortIdDepart { get; }
+        byte PortIdArrivee { get; }
     }
 }

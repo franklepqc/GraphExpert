@@ -20,50 +20,31 @@ namespace GraphExpert.Data.Repos
         /// <summary>
         /// Ajoute une nouvelle liaison.
         /// </summary>
-        /// <param name="idDepart">Point de départ.</param>
-        /// <param name="idArrivee">Point d'arrivée.</param>
+        /// <param name="portIdDepart">Point de départ.</param>
+        /// <param name="portIdArrivee">Point d'arrivée.</param>
         /// <returns>Nouvelle liaison.</returns>
-        public IArete Ajouter(byte idDepart, byte idArrivee)
+        public IArete Ajouter(byte portIdDepart, byte portIdArrivee)
         {
-            var liaison = Obtenir(idDepart, idArrivee);
+            var liaison = Obtenir(portIdDepart, portIdArrivee);
 
             if (null == liaison)
             {
-                liaison = new Arete(idDepart, idArrivee, 1);
+                liaison = new Arete(portIdDepart, portIdArrivee);
 
                 _liaisons.Add(liaison);
-            }
-            else
-            {
-                AugmenterPoids(idDepart, idArrivee);
             }
 
             return liaison;
         }
 
         /// <summary>
-        /// Augmente le poid par le nombre voulu.
-        /// </summary>
-        /// <param name="idDepart">Point de départ.</param>
-        /// <param name="idArrivee">Point d'arrivée.</param>
-        /// <param name="poids">Poids désiré.</param>
-        public void AugmenterPoids(byte idDepart, byte idArrivee, int poids = 1)
-        {
-            var liaison = Obtenir(idDepart, idArrivee);
-
-            if (null == liaison) throw new Exception();
-
-            //liaison.Poids += poids;
-        }
-
-        /// <summary>
         /// Supprime la liaison.
         /// </summary>
-        /// <param name="idDepart">Point de départ.</param>
-        /// <param name="idArrivee">Point d'arrivée.</param>
-        public void Supprimer(byte idDepart, byte idArrivee)
+        /// <param name="portIdDepart">Point de départ.</param>
+        /// <param name="portIdArrivee">Point d'arrivée.</param>
+        public void Supprimer(byte portIdDepart, byte portIdArrivee)
         {
-            var liaison = Obtenir(idDepart, idArrivee);
+            var liaison = Obtenir(portIdDepart, portIdArrivee);
 
             if (null == liaison) throw new Exception();
 
@@ -73,10 +54,10 @@ namespace GraphExpert.Data.Repos
         /// <summary>
         /// Obtenir une liaison.
         /// </summary>
-        /// <param name="idDepart">Point de départ.</param>
-        /// <param name="idArrivee">Point d'arrivée.</param>
+        /// <param name="portIdDepart">Point de départ.</param>
+        /// <param name="portIdArrivee">Point d'arrivée.</param>
         /// <returns>Liaison unique.</returns>
-        private IArete Obtenir(byte idDepart, byte idArrivee) => _liaisons.SingleOrDefault(k => k.ArretIdDepart == idDepart && k.ArretIdArrivee == idArrivee);
+        private IArete Obtenir(byte idDepart, byte idArrivee) => _liaisons.SingleOrDefault(k => k.PortIdDepart == idDepart && k.PortIdArrivee == idArrivee);
 
         /// <summary>
         /// Vider les objets persistés.

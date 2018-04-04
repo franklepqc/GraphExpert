@@ -88,6 +88,8 @@
     <Compile Include="Models\LineVM.cs" />
     <Compile Include="Models\AgentVM.cs" />
     <Compile Include="SelecteurDataTemplate.cs" />
+    <Compile Include="Services\AnimationDeplacement.cs" />
+    <Compile Include="Services\IAnimationDeplacement.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Controles\Agent.xaml">
       <Generator>MSBuild:Compile</Generator>

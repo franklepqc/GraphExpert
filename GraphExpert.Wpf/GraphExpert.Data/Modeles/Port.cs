@@ -4,17 +4,14 @@ namespace GraphExpert.Data.Modeles
 {
     public class Port : IPort
     {
-        public Port(int id, int noeudId, int noeudIdDest)
+        public Port(byte id, byte noeudId)
         {
             Id = id;
             NoeudId = noeudId;
-            NoeudIdDest = noeudIdDest;
         }
 
-        public int Id { get; }
+        public byte Id { get; }
 
-        public int NoeudId { get; set; }
-
-        public int NoeudIdDest { get; set; }
+        public byte NoeudId { get; set; }
     }
 }
