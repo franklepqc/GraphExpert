@@ -29,11 +29,11 @@ namespace GraphExpert.Wpf.Views
             }
             else
             {
-                object obj = ObtenirAgent(e.OriginalSource);
+                var obj = ObtenirAgent(e.OriginalSource);
 
                 if (null != obj)
                 {
-                    Modele.Deplacer(e.Source as Agent, 1);
+                    Modele.Deplacer(e.Source as Agent, obj.NoeudId);
                 }
                 else
                 {

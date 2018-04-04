@@ -23,7 +23,15 @@ namespace GraphExpert.Data.Repos
         /// <returns>Port.</returns>
         public IPort Ajouter(byte noeudId)
         {
-            var port = new Port((byte)(_ports.Any() ? (_ports.Max(k => k.Id) + 1) : 1), noeudId);
+            var portsMemeNoeud = _ports.Where(p => p.NoeudId == noeudId);
+            byte id = 1;
+
+            if (portsMemeNoeud.Any())
+            {
+                id = (byte)(portsMemeNoeud.Max(k => k.Id) + 1);
+            }
+
+            var port = new Port(id, noeudId);
 
             _ports.Add(port);
 

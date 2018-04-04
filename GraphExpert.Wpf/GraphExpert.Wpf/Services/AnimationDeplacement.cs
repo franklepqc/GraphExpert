@@ -43,9 +43,11 @@ namespace GraphExpert.Wpf.Services
             var storyBoard1 = new Storyboard();
             var storyBoard2 = new Storyboard();
             var arete = _repoAretes.Obtenir().SingleOrDefault(p => p.PortIdDepart == portId);
-            var portDest = _repoPorts.Obtenir().SingleOrDefault(p => p.Id == arete.PortIdArrivee);
+            var portDest = _repoPorts.Obtenir().SingleOrDefault(p => p.Id == arete.PortIdArrivee && p.NoeudId != noeudId);
             var noeudDest = _repoNoeuds.Obtenir().SingleOrDefault(p => p.Id == portDest.NoeudId);
             var noeudVMDest = noeuds.SingleOrDefault(p => p.Id == noeudDest.Id);
+
+            ((AgentVM)agent.DataContext).NoeudId = noeudDest.Id;
 
             var duree = TimeSpan.FromSeconds(1d);
             var lineaireXDebut = new LinearDoubleKeyFrame(agent.Left, KeyTime.FromTimeSpan(TimeSpan.Zero));

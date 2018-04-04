@@ -68,13 +68,13 @@ namespace GraphExpert.Wpf.ViewModels
         /// <param name="x">Coordonnée X à l'écran.</param>
         /// <param name="y">Coordonnée Y à l'écran.</param>
         /// <param name="noeudId">N° du noeud.</param>
-        internal void AjouterAgent(double x, double y, int noeudId)
+        internal void AjouterAgent(double x, double y, byte noeudId)
         {
             // Ajout dans la persistance.
             var agent = _repoAgents.Ajouter(noeudId);
 
             // Afficher.
-            Formes.Add(new AgentVM(x, y, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
+            Formes.Add(new AgentVM(x, y, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
         }
 
         /// <summary>
