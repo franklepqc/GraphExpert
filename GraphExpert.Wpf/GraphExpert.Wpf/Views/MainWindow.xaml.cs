@@ -33,7 +33,7 @@ namespace GraphExpert.Wpf.Views
 
                 if (null != obj)
                 {
-                    Modele.Deplacer(obj as AgentVM, 2);
+                    Modele.Deplacer(e.Source as Agent, 1);
                 }
                 else
                 {

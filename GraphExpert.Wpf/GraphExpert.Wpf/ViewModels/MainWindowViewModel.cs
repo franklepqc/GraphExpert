@@ -1,6 +1,7 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
 using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Repos;
+using GraphExpert.Wpf.Controles;
 using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.Services;
 using Prism.Commands;
@@ -147,9 +148,9 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         /// <param name="agent">Agent à déplacer.</param>
         /// <param name="noeudId">N° du noeud de destination.</param>
-        public async void Deplacer(AgentVM agent, byte noeudId)
+        public void Deplacer(Agent agent, byte noeudId)
         {
-            await _animation.Executer(agent, Formes.OfType<StopVM>(), noeudId, 1);
+            _animation.Executer(agent, Formes.OfType<StopVM>(), noeudId, 1);
         }
 
         /// <summary>

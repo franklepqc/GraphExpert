@@ -10,8 +10,6 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="GraphExpert" Height="350" Width="525">
-    <Window.Resources>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
