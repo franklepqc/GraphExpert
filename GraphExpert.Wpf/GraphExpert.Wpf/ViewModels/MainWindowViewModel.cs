@@ -251,8 +251,18 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void DeplacerExecuter(ItemsControl controleListe)
         {
-            var conteneur = controleListe.ItemContainerGenerator.ContainerFromItem(Formes.OfType<AgentVM>().Single(p => p.NoeudId == Port.NoeudId));
-            _animation.Executer(VisualTreeHelper.GetChild(conteneur, 0) as Agent, Formes.OfType<StopVM>(), Port.NoeudId, Port.Id);
+            // Récupérer l'agent affecté.
+            var agent = _repoAgents.Obtenir().SingleOrDefault(p => p.Id == AgentId);
+            var agentVM = Formes.OfType<AgentVM>().Single(p => p.NoeudId == Port.NoeudId);
+
+            // Effectuer l'animation.
+            var conteneur = controleListe.ItemContainerGenerator.ContainerFromItem(agentVM);
+            var noeudIdDest = _animation.Executer(VisualTreeHelper.GetChild(conteneur, 0) as Agent, Formes.OfType<StopVM>(), Port.NoeudId, Port.Id);
+
+            // Déplacer.
+            agent.NoeudId = noeudIdDest;
+            agentVM.NoeudId = noeudIdDest;
+            PopulerPorts(AgentId);
         }
 
         /// <summary>

@@ -7,6 +7,6 @@ namespace GraphExpert.Wpf.Services
 {
     public interface IAnimationDeplacement
     {
-        void Executer(Agent agent, IEnumerable<StopVM> noeuds, byte noeudId, byte portId);
+        byte Executer(Agent agent, IEnumerable<StopVM> noeuds, byte noeudId, byte portId);
     }
 }

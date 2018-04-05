@@ -37,7 +37,7 @@ namespace GraphExpert.Wpf.Services
         /// <param name="noeudId">N° du noeud.</param>
         /// <param name="portId">N° du port.</param>
         /// <returns></returns>
-        public void Executer(Agent agent, IEnumerable<StopVM> noeuds, byte noeudId, byte portId)
+        public byte Executer(Agent agent, IEnumerable<StopVM> noeuds, byte noeudId, byte portId)
         {
             // Variables de travail.
             var storyBoard1 = new Storyboard();
@@ -73,6 +73,8 @@ namespace GraphExpert.Wpf.Services
             // Démarrer l'animation.
             storyBoard1.Begin();
             storyBoard2.Begin();
+
+            return noeudDest.Id;
         }
 
         /// <summary>
