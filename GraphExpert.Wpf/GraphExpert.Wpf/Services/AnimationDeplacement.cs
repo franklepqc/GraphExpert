@@ -44,8 +44,6 @@ namespace GraphExpert.Wpf.Services
             var storyBoard2 = new Storyboard();
             var noeudDest = ObtenirNoeud(noeudId, portId, noeuds);            
 
-            ((AgentVM)agent.DataContext).NoeudId = noeudDest.Id;
-
             var duree = TimeSpan.FromSeconds(1d);
             var lineaireXDebut = new LinearDoubleKeyFrame(agent.Left, KeyTime.FromTimeSpan(TimeSpan.Zero));
             var lineaireXFin = new LinearDoubleKeyFrame(noeudDest.X, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));

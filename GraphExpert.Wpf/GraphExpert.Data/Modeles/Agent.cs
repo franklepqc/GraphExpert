@@ -4,16 +4,16 @@ namespace GraphExpert.Data.Modeles
 {
     public class Agent : IAgent
     {
-        public Agent(int id, int noeudId, string couleur)
+        public Agent(byte id, byte noeudId, string couleur)
         {
             Id = id;
             NoeudId = noeudId;
             Couleur = couleur;
         }
 
-        public int Id { get; }
+        public byte Id { get; }
 
-        public int NoeudId { get; set; }
+        public byte NoeudId { get; set; }
 
         public string Couleur { get; set; }
     }

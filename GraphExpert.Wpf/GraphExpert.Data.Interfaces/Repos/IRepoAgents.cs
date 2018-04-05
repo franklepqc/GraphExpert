@@ -7,9 +7,9 @@ namespace GraphExpert.Data.Interfaces.Repos
     {
         IEnumerable<IAgent> Obtenir();
 
-        IAgent Ajouter(int noeudId);
+        IAgent Ajouter(byte noeudId);
 
-        void Supprimer(int id);
+        void Supprimer(byte id);
 
         void Vider();
     }

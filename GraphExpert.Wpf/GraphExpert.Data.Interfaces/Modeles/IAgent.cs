@@ -2,9 +2,9 @@
 {
     public interface IAgent
     {
-        int Id { get; }
+        byte Id { get; }
 
-        int NoeudId { get; set; }
+        byte NoeudId { get; set; }
 
         string Couleur { get; }
     }

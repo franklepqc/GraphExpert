@@ -29,16 +29,7 @@ namespace GraphExpert.Wpf.Views
             }
             else
             {
-                var obj = ObtenirAgent(e.OriginalSource);
-
-                if (null != obj)
-                {
-                    Modele.Deplacer(e.Source as Agent, obj.NoeudId);
-                }
-                else
-                {
-                    Modele.AjouterLiaison(ObtenirStop(e.OriginalSource));
-                }
+                Modele.AjouterLiaison(ObtenirStop(e.OriginalSource));
             }
         }
 
@@ -50,11 +41,6 @@ namespace GraphExpert.Wpf.Views
             {
                 Modele.AjouterAgent(noeud.X, noeud.Y, noeud.Id);
             }
-        }
-        
-        private AgentVM ObtenirAgent(object element)
-        {
-            return (element as FrameworkElement).DataContext as AgentVM;
         }
 
         private StopVM ObtenirStop(object element)

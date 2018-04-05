@@ -1,5 +1,6 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
 using GraphExpert.Data.Interfaces;
+using GraphExpert.Data.Interfaces.Modeles;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Controles;
 using GraphExpert.Wpf.Models;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -20,28 +22,12 @@ namespace GraphExpert.Wpf.ViewModels
     /// </summary>
     public class MainWindowViewModel : Prism.Mvvm.BindableBase
     {
-        /// <summary>
-        /// Repos.
-        /// </summary>
-        private IRepoNoeuds _repoArrets;
-        private IRepoAretes _repoLiaisons;
-        private IRepoAgents _repoAgents;
-        private IRepoPorts _repoPorts;
+        #region Fields
 
         /// <summary>
-        /// Résolveur.
+        /// Agent sélectionné.
         /// </summary>
-        private IResolveur _resolveur;
-
-        /// <summary>
-        /// Arrêt n°1 cliqué.
-        /// </summary>
-        private StopVM _arret1;
-
-        /// <summary>
-        /// Service de déplacement.
-        /// </summary>
-        private IAnimationDeplacement _animation;
+        private byte _agentId;
 
         /// <summary>
         /// Algorithme sélectionné.
@@ -49,76 +35,37 @@ namespace GraphExpert.Wpf.ViewModels
         private TypeAlogorithmeEnum _algorithme = TypeAlogorithmeEnum.FloydWarshall;
 
         /// <summary>
-        /// Sélection du choix.
+        /// Service de déplacement.
         /// </summary>
-        public bool EstAlgoFW
-        {
-            get { return _algorithme == TypeAlogorithmeEnum.FloydWarshall; }
-            set
-            {
-                SetProperty(ref _algorithme, TypeAlogorithmeEnum.FloydWarshall, @"EstAlgoFW");
-                RaisePropertyChanged(@"EstAlgoDFS");
-                RaisePropertyChanged(@"EstAlgoBFS");
-            }
-        }
+        private IAnimationDeplacement _animation;
 
         /// <summary>
-        /// Ajouter un agent.
+        /// Arrêt n°1 cliqué.
         /// </summary>
-        /// <param name="x">Coordonnée X à l'écran.</param>
-        /// <param name="y">Coordonnée Y à l'écran.</param>
-        /// <param name="noeudId">N° du noeud.</param>
-        internal void AjouterAgent(double x, double y, byte noeudId)
-        {
-            // Ajout dans la persistance.
-            var agent = _repoAgents.Ajouter(noeudId);
-
-            // Afficher.
-            Formes.Add(new AgentVM(x, y, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
-        }
+        private StopVM _arret1;
 
         /// <summary>
-        /// Sélection du choix.
+        /// Port sélectionné.
         /// </summary>
-        public bool EstAlgoDFS
-        {
-            get { return _algorithme == TypeAlogorithmeEnum.DFS; }
-            set
-            {
-                SetProperty(ref _algorithme, TypeAlogorithmeEnum.DFS, @"EstAlgoDFS");
-                RaisePropertyChanged(@"EstAlgoFW");
-                RaisePropertyChanged(@"EstAlgoBFS");
-            }
-        }
+        private IPort _port;
+
+        private IRepoAgents _repoAgents;
 
         /// <summary>
-        /// Sélection du choix.
+        /// Repos.
         /// </summary>
-        public bool EstAlgoBFS
-        {
-            get { return _algorithme == TypeAlogorithmeEnum.BFS; }
-            set
-            {
-                SetProperty(ref _algorithme, TypeAlogorithmeEnum.BFS, @"EstAlgoBFS");
-                RaisePropertyChanged(@"EstAlgoDFS");
-                RaisePropertyChanged(@"EstAlgoFW");
-            }
-        }
+        private IRepoNoeuds _repoArrets;
+        private IRepoAretes _repoLiaisons;
+        private IRepoPorts _repoPorts;
 
         /// <summary>
-        /// Formes à afficher.
+        /// Résolveur.
         /// </summary>
-        public ObservableCollection<object> Formes { get; private set; } = new ObservableCollection<object>();
+        private IResolveur _resolveur;
 
-        /// <summary>
-        /// Bouton 'résoudre'.
-        /// </summary>
-        public ICommand CommandeResoudre { get; private set; }
+        #endregion Fields
 
-        /// <summary>
-        /// Menu contextuel 'Nettoyer'.
-        /// </summary>
-        public ICommand CommandeNettoyer { get; private set; }
+        #region Constructors
 
         /// <summary>
         /// Constructeur par défaut.
@@ -141,17 +88,118 @@ namespace GraphExpert.Wpf.ViewModels
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
+            CommandeDeplacer = new DelegateCommand<ItemsControl>(DeplacerExecuter, PeutDeplacer);
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// N° de l'agent sélectionné.
+        /// </summary>
+        public byte AgentId
+        {
+            get { return _agentId; }
+            set { SetProperty(ref _agentId, value, () => PopulerPorts(value)); }
         }
 
         /// <summary>
-        /// Effectue le déplacement.
+        /// Populer la liste des ports.
         /// </summary>
-        /// <param name="agent">Agent à déplacer.</param>
-        /// <param name="noeudId">N° du noeud de destination.</param>
-        public void Deplacer(Agent agent, byte noeudId)
+        /// <param name="agentId"></param>
+        private void PopulerPorts(byte agentId)
         {
-            _animation.Executer(agent, Formes.OfType<StopVM>(), noeudId, 1);
+            Ports.Clear();
+
+            var agent = _repoAgents.Obtenir().Single(p => p.Id == agentId);
+            Ports.AddRange(_repoPorts.Obtenir().Where(p => p.NoeudId == agent.NoeudId));
         }
+
+        /// <summary>
+        /// Agents.
+        /// </summary>
+        public ObservableCollection<IAgent> Agents { get; private set; } = new ObservableCollection<IAgent>();
+
+        /// <summary>
+        /// Commande déplacer.
+        /// </summary>
+        public DelegateCommand<ItemsControl> CommandeDeplacer { get; private set; }
+
+        /// <summary>
+        /// Menu contextuel 'Nettoyer'.
+        /// </summary>
+        public ICommand CommandeNettoyer { get; private set; }
+
+        /// <summary>
+        /// Bouton 'résoudre'.
+        /// </summary>
+        public ICommand CommandeResoudre { get; private set; }
+
+        /// <summary>
+        /// Sélection du choix.
+        /// </summary>
+        public bool EstAlgoBFS
+        {
+            get { return _algorithme == TypeAlogorithmeEnum.BFS; }
+            set
+            {
+                SetProperty(ref _algorithme, TypeAlogorithmeEnum.BFS, @"EstAlgoBFS");
+                RaisePropertyChanged(@"EstAlgoDFS");
+                RaisePropertyChanged(@"EstAlgoFW");
+            }
+        }
+
+        /// <summary>
+        /// Sélection du choix.
+        /// </summary>
+        public bool EstAlgoDFS
+        {
+            get { return _algorithme == TypeAlogorithmeEnum.DFS; }
+            set
+            {
+                SetProperty(ref _algorithme, TypeAlogorithmeEnum.DFS, @"EstAlgoDFS");
+                RaisePropertyChanged(@"EstAlgoFW");
+                RaisePropertyChanged(@"EstAlgoBFS");
+            }
+        }
+
+        /// <summary>
+        /// Sélection du choix.
+        /// </summary>
+        public bool EstAlgoFW
+        {
+            get { return _algorithme == TypeAlogorithmeEnum.FloydWarshall; }
+            set
+            {
+                SetProperty(ref _algorithme, TypeAlogorithmeEnum.FloydWarshall, @"EstAlgoFW");
+                RaisePropertyChanged(@"EstAlgoDFS");
+                RaisePropertyChanged(@"EstAlgoBFS");
+            }
+        }
+
+        /// <summary>
+        /// Formes à afficher.
+        /// </summary>
+        public ObservableCollection<object> Formes { get; private set; } = new ObservableCollection<object>();
+
+        /// <summary>
+        /// N° du port sélectionné.
+        /// </summary>
+        public IPort Port
+        {
+            get { return _port; }
+            set { SetProperty(ref _port, value, () => CommandeDeplacer.RaiseCanExecuteChanged()); }
+        }
+
+        /// <summary>
+        /// Ports.
+        /// </summary>
+        public ObservableCollection<IPort> Ports { get; private set; } = new ObservableCollection<IPort>();
+
+        #endregion Properties
+
+        #region Methods
 
         /// <summary>
         /// Ajouter l'arrêt à la persistance et ensuite l'afficher.
@@ -199,6 +247,15 @@ namespace GraphExpert.Wpf.ViewModels
         }
 
         /// <summary>
+        /// Effectuer le déplacement.
+        /// </summary>
+        public void DeplacerExecuter(ItemsControl controleListe)
+        {
+            var conteneur = controleListe.ItemContainerGenerator.ContainerFromItem(Formes.OfType<AgentVM>().Single(p => p.NoeudId == Port.NoeudId));
+            _animation.Executer(VisualTreeHelper.GetChild(conteneur, 0) as Agent, Formes.OfType<StopVM>(), Port.NoeudId, Port.Id);
+        }
+
+        /// <summary>
         /// Nettoyer le tout.
         /// </summary>
         public void Nettoyer()
@@ -210,10 +267,25 @@ namespace GraphExpert.Wpf.ViewModels
             // Vider l'instance en mémoire d'un arrêt cliqué.
             _arret1 = null;
 
+            // Vider les choix.
+            _agentId = 0;
+            _port = null;
+
             // Vider l'IU.
             Formes.Clear();
+            Agents.Clear();
+            Ports.Clear();
+            CommandeDeplacer.RaiseCanExecuteChanged();
         }
-        
+
+        /// <summary>
+        /// Détermine si on peut déplacer.
+        /// </summary>
+        public bool PeutDeplacer(ItemsControl controleListe)
+        {
+            return (_agentId != 0 && _port != null);
+        }
+
         /// <summary>
         /// Résoudre par l'algorithme choisi.
         /// </summary>
@@ -229,5 +301,23 @@ namespace GraphExpert.Wpf.ViewModels
         {
             _resolveur.Resoudre(_algorithme);
         }
+
+        /// <summary>
+        /// Ajouter un agent.
+        /// </summary>
+        /// <param name="x">Coordonnée X à l'écran.</param>
+        /// <param name="y">Coordonnée Y à l'écran.</param>
+        /// <param name="noeudId">N° du noeud.</param>
+        internal void AjouterAgent(double x, double y, byte noeudId)
+        {
+            // Ajout dans la persistance.
+            var agent = _repoAgents.Ajouter(noeudId);
+
+            // Afficher.
+            Agents.Add(agent);
+            Formes.Add(new AgentVM(x, y, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
+        }
+
+        #endregion Methods
     }
 }

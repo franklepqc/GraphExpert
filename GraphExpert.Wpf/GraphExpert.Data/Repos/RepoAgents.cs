@@ -29,9 +29,9 @@ namespace GraphExpert.Data.Repos
         /// </summary>
         /// <param name="noeudId">N° du noeud attaché.</param>
         /// <returns>Le nouvel agent.</returns>
-        public IAgent Ajouter(int noeudId)
+        public IAgent Ajouter(byte noeudId)
         {
-            var id = (_agents.Any() ? (_agents.Max(k => k.Id) + 1) : 1);
+            var id = (byte)(_agents.Any() ? (_agents.Max(k => k.Id) + 1) : 1);
             var couleur = _couleurs[_indexCouleurs++];
 
             var agent = new Agent(id, noeudId, couleur);
@@ -51,7 +51,7 @@ namespace GraphExpert.Data.Repos
         /// Retire l'agent en question.
         /// </summary>
         /// <param name="id">Identifiant de l'agent.</param>
-        public void Supprimer(int id)
+        public void Supprimer(byte id)
         {
             _agents.Remove(_agents.Single(p => p.Id == id));
         }
