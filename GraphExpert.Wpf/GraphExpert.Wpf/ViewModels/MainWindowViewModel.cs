@@ -187,10 +187,11 @@ namespace GraphExpert.Wpf.ViewModels
                 // Ajout aux éléments à afficher.
                 Formes.Add(new LineVM(_arret1, arret));
 
-                // Afficher.
+                // Ajouter les deux liaisons dans les deux sens.
                 var portDepa = _repoPorts.Ajouter(_arret1.Id);
                 var portArri = _repoPorts.Ajouter(arret.Id);
-                _repoLiaisons.Ajouter(portDepa.Id, portArri.Id);
+                _repoLiaisons.Ajouter(portDepa.NoeudId, portDepa.Id, portArri.NoeudId, portArri.Id);
+                _repoLiaisons.Ajouter(portArri.NoeudId, portArri.Id, portDepa.NoeudId, portDepa.Id);
 
                 // Retirer l'arrêt.
                 _arret1 = null;

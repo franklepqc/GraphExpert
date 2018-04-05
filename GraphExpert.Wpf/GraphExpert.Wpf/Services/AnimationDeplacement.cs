@@ -42,18 +42,15 @@ namespace GraphExpert.Wpf.Services
             // Variables de travail.
             var storyBoard1 = new Storyboard();
             var storyBoard2 = new Storyboard();
-            var arete = _repoAretes.Obtenir().SingleOrDefault(p => p.PortIdDepart == portId);
-            var portDest = _repoPorts.Obtenir().SingleOrDefault(p => p.Id == arete.PortIdArrivee && p.NoeudId != noeudId);
-            var noeudDest = _repoNoeuds.Obtenir().SingleOrDefault(p => p.Id == portDest.NoeudId);
-            var noeudVMDest = noeuds.SingleOrDefault(p => p.Id == noeudDest.Id);
+            var noeudDest = ObtenirNoeud(noeudId, portId, noeuds);            
 
             ((AgentVM)agent.DataContext).NoeudId = noeudDest.Id;
 
             var duree = TimeSpan.FromSeconds(1d);
             var lineaireXDebut = new LinearDoubleKeyFrame(agent.Left, KeyTime.FromTimeSpan(TimeSpan.Zero));
-            var lineaireXFin = new LinearDoubleKeyFrame(noeudVMDest.X, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));
+            var lineaireXFin = new LinearDoubleKeyFrame(noeudDest.X, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));
             var lineaireYDebut = new LinearDoubleKeyFrame(agent.Top, KeyTime.FromTimeSpan(TimeSpan.Zero));
-            var lineaireYFin = new LinearDoubleKeyFrame(noeudVMDest.Y, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));
+            var lineaireYFin = new LinearDoubleKeyFrame(noeudDest.Y, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));
             var collection1 = new DoubleAnimationUsingKeyFrames();
             var collection2 = new DoubleAnimationUsingKeyFrames();
 
@@ -78,6 +75,19 @@ namespace GraphExpert.Wpf.Services
             // Démarrer l'animation.
             storyBoard1.Begin();
             storyBoard2.Begin();
+        }
+
+        /// <summary>
+        /// Obtenir le noeud (visuel) pour l'animation.
+        /// </summary>
+        /// <param name="noeudId">N° du noeud de départ.</param>
+        /// <param name="portId">N° du pord de départ.</param>
+        /// <param name="noeuds">Noeuds (visuel).</param>
+        /// <returns>Noeud d'arrivée.</returns>
+        private StopVM ObtenirNoeud(byte noeudId, byte portId, IEnumerable<StopVM> noeuds)
+        {
+            var arete = _repoAretes.Obtenir().SingleOrDefault(p => p.NoeudIdDepart == noeudId && p.PortIdDepart == portId);
+            return noeuds.SingleOrDefault(p => p.Id == arete.NoeudIdArrivee);
         }
     }
 }
