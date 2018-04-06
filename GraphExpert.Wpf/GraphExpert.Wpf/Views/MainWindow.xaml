@@ -42,8 +42,7 @@
                                   X2="{Binding Path=X2}"
                                   Y2="{Binding Path=Y2}"
                                   Stroke="Black"
-                                  StrokeThickness="1"
-                                  />
+                                  StrokeThickness="1" />
                         </DataTemplate>
                     </local:SelecteurDataTemplate.TemplateLiaison>
                 </local:SelecteurDataTemplate>
@@ -71,9 +70,28 @@
                     
                     <Label Grid.Row="1" Grid.Column="0" Content="Port :" />
 
-                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Path=Agents}" DisplayMemberPath="Id" SelectedValue="{Binding Path=AgentId}" SelectedValuePath="Id" />
+                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Path=Agents}" SelectedValue="{Binding Path=AgentId}" SelectedValuePath="Id">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Height="20" Width="20" Margin="5" Fill="{Binding Path=Couleur}" />
+                                    <TextBlock Text="Agent n°" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=Ports}" DisplayMemberPath="Id" SelectedItem="{Binding Path=Port}" />
+                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=Ports}" SelectedItem="{Binding Path=Port}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Port n°" />
+                                    <TextBlock Text="{Binding Path=Id}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
 
                 <Button Grid.Column="1" Content="Déplacer" Command="{Binding Path=CommandeDeplacer}" CommandParameter="{Binding ElementName=controleListe}" />
