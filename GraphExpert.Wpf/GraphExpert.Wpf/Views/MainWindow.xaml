@@ -47,6 +47,13 @@
                     </local:SelecteurDataTemplate.TemplateLiaison>
                 </local:SelecteurDataTemplate>
             </ItemsControl.ItemTemplateSelector>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type ContentPresenter}">
+                    <Style.Setters>
+                        <Setter Property="Panel.ZIndex" Value="{Binding Path=ZIndex, Mode=OneWay}" />
+                    </Style.Setters>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
         <GroupBox Grid.Row="1" Header="Déplacer">

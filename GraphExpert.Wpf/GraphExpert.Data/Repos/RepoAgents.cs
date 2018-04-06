@@ -62,6 +62,7 @@ namespace GraphExpert.Data.Repos
         public void Vider()
         {
             _agents.Clear();
+            _indexCouleurs = 0;
         }
     }
 }

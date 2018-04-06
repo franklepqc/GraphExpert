@@ -17,5 +17,7 @@ namespace GraphExpert.Wpf.Models
 
         public double X2 => _arrivee.X + 15;
         public double Y2 => _arrivee.Y + 15;
+
+        public int ZIndex => 0;
     }
 }

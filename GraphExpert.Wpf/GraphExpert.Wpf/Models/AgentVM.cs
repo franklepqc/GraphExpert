@@ -15,6 +15,8 @@ namespace GraphExpert.Wpf.Models
             Couleur = new SolidColorBrush(c);
         }
 
+        public int ZIndex => 2;
+
         public double X
         {
             get { return _x; }

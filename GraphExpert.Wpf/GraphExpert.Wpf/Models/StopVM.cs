@@ -14,5 +14,7 @@
         public double Y { get; set; }
 
         public byte Id { get; set; }
+
+        public int ZIndex => 1;
     }
 }
