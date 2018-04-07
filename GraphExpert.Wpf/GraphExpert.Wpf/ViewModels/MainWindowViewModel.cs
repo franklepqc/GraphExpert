@@ -112,8 +112,12 @@ namespace GraphExpert.Wpf.ViewModels
         {
             Ports.Clear();
 
-            var agent = _repoAgents.Obtenir().Single(p => p.Id == agentId);
-            Ports.AddRange(_repoPorts.Obtenir().Where(p => p.NoeudId == agent.NoeudId));
+            var agent = _repoAgents.Obtenir(agentId);
+
+            if (null != agent)
+            {
+                Ports.AddRange(_repoPorts.ObtenirPourNoeud(agent.NoeudId));
+            }
         }
 
         /// <summary>
@@ -240,6 +244,8 @@ namespace GraphExpert.Wpf.ViewModels
                 var portArri = _repoPorts.Ajouter(arret.Id);
                 _repoLiaisons.Ajouter(portDepa.NoeudId, portDepa.Id, portArri.NoeudId, portArri.Id);
                 _repoLiaisons.Ajouter(portArri.NoeudId, portArri.Id, portDepa.NoeudId, portDepa.Id);
+                AjouterPortVM(_arret1, portDepa);
+                AjouterPortVM(arret, portArri);
 
                 // Retirer l'arrêt.
                 _arret1 = null;
@@ -247,6 +253,16 @@ namespace GraphExpert.Wpf.ViewModels
                 // Repopuler la liste des ports.
                 PopulerPorts(AgentId);
             }
+        }
+
+        /// <summary>
+        /// Ajoute le port au noeud demandé.
+        /// </summary>
+        /// <param name="noeud">Noeud.</param>
+        /// <param name="port">¨Port.</param>
+        private void AjouterPortVM(StopVM noeud, IPort port)
+        {
+            Formes.Add(new PortVM(port, noeud.X, noeud.Y));
         }
 
         /// <summary>

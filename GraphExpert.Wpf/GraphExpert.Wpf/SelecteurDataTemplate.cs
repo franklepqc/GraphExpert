@@ -12,6 +12,8 @@ namespace GraphExpert.Wpf
 
         public DataTemplate TemplateAgent { get; set; }
 
+        public DataTemplate TemplatePort { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item?.GetType() == typeof(StopVM))
@@ -25,6 +27,10 @@ namespace GraphExpert.Wpf
             else if (item?.GetType() == typeof(AgentVM))
             {
                 return TemplateAgent;
+            }
+            else if (item?.GetType() == typeof(PortVM))
+            {
+                return TemplatePort;
             }
 
             return base.SelectTemplate(item, container);

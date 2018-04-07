@@ -45,6 +45,13 @@ namespace GraphExpert.Data.Repos
         public IEnumerable<IPort> Obtenir() => _ports;
 
         /// <summary>
+        /// Obtenir les ports pour le noeud en paramètre.
+        /// </summary>
+        /// <param name="noeudId">N° du noeud.</param>
+        /// <returns>Ports disponibles.</returns>
+        public IEnumerable<IPort> ObtenirPourNoeud(byte noeudId) => _ports.Where(p => p.NoeudId == noeudId).ToList();
+
+        /// <summary>
         /// Supprimer le port.
         /// </summary>
         /// <param name="id">N° du port.</param>

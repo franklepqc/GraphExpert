@@ -3,14 +3,12 @@ using System.Collections.Generic;
 
 namespace GraphExpert.Data.Interfaces.Repos
 {
-    public interface IRepoPorts
+    public interface IRepoPorts : IRepoBase<IPort>
     {
-        IEnumerable<IPort> Obtenir();
-
         IPort Ajouter(byte noeudId);
 
         void Supprimer(byte id, byte noeudId);
 
-        void Vider();
+        IEnumerable<IPort> ObtenirPourNoeud(byte noeudId);
     }
 }

@@ -30,6 +30,11 @@
                             <controles:Noeud Left="{Binding Path=X}" Top="{Binding Path=Y}" />
                         </DataTemplate>
                     </local:SelecteurDataTemplate.TemplateArret>
+                    <local:SelecteurDataTemplate.TemplatePort>
+                        <DataTemplate DataType="{x:Type vms:PortVM}">
+                            <controles:Port Left="{Binding Path=X}" Top="{Binding Path=Y}" Etiquette="{Binding Path=Id}" />
+                        </DataTemplate>
+                    </local:SelecteurDataTemplate.TemplatePort>
                     <local:SelecteurDataTemplate.TemplateAgent>
                         <DataTemplate DataType="{x:Type vms:AgentVM}">
                             <controles:Agent Left="{Binding Path=X}" Top="{Binding Path=Y}" Couleur="{Binding Path=Couleur}" />
