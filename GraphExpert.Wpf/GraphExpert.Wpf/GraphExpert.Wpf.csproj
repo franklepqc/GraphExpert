@@ -96,7 +96,6 @@
     <Compile Include="SelecteurDataTemplate.cs" />
     <Compile Include="Services\AnimationDeplacement.cs" />
     <Compile Include="Services\IAnimationDeplacement.cs" />
-    <Compile Include="Services\IDeplacement.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Controles\Agent.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -160,6 +159,10 @@
     <ProjectReference Include="..\GraphExpert.Algorithmes\GraphExpert.Algorithmes.csproj">
       <Project>{1277b1e7-f4e0-4c39-add6-bb879d788903}</Project>
       <Name>GraphExpert.Algorithmes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphExpert.Animations\GraphExpert.Animations.csproj">
+      <Project>{0d443430-3127-4b17-b3f7-40f2dd51470b}</Project>
+      <Name>GraphExpert.Animations</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphExpert.Data.Interfaces\GraphExpert.Data.Interfaces.csproj">
       <Project>{d066580b-9886-487f-a3e1-6d856039fd65}</Project>

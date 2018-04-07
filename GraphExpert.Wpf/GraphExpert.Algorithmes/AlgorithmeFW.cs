@@ -1,4 +1,6 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
+using GraphExpert.Animations;
+using System.Collections.Generic;
 
 namespace GraphExpert.Algorithmes
 {
@@ -7,7 +9,7 @@ namespace GraphExpert.Algorithmes
         /// <summary>
         /// Résoudre selon l'algorithme.
         /// </summary>
-        public void Resoudre()
+        public IEnumerable<IDeplacement> Resoudre()
         {
             throw new System.NotImplementedException();
         }

@@ -52,6 +52,10 @@
       <Project>{943D3F23-2D69-4D10-9429-69B2143EE67D}</Project>
       <Name>GraphExpert.Algorithmes.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GraphExpert.Animations\GraphExpert.Animations.csproj">
+      <Project>{0d443430-3127-4b17-b3f7-40f2dd51470b}</Project>
+      <Name>GraphExpert.Animations</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

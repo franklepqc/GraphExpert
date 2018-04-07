@@ -1,6 +1,7 @@
 ﻿using GraphExpert.Wpf.Interfaces;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using GraphExpert.Animations;
 
 namespace GraphExpert.Wpf.Services
 {

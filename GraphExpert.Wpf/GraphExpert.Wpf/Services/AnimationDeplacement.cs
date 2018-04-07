@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using GraphExpert.Animations;
 
 namespace GraphExpert.Wpf.Services
 {

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Algorithmes", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Algorithmes.Interfaces", "GraphExpert.Algorithmes.Interfaces\GraphExpert.Algorithmes.Interfaces.csproj", "{943D3F23-2D69-4D10-9429-69B2143EE67D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphExpert.Animations", "GraphExpert.Animations\GraphExpert.Animations.csproj", "{0D443430-3127-4B17-B3F7-40F2DD51470B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{943D3F23-2D69-4D10-9429-69B2143EE67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D443430-3127-4B17-B3F7-40F2DD51470B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D443430-3127-4B17-B3F7-40F2DD51470B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D443430-3127-4B17-B3F7-40F2DD51470B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D443430-3127-4B17-B3F7-40F2DD51470B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

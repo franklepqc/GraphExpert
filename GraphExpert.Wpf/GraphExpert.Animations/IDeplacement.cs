@@ -1,4 +1,4 @@
-﻿namespace GraphExpert.Wpf.Services
+﻿namespace GraphExpert.Animations
 {
     public interface IDeplacement
     {

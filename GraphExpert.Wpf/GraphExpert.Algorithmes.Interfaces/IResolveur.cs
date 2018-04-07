@@ -1,7 +1,10 @@
-﻿namespace GraphExpert.Algorithmes.Interfaces
+﻿using GraphExpert.Animations;
+using System.Collections.Generic;
+
+namespace GraphExpert.Algorithmes.Interfaces
 {
     public interface IResolveur
     {
-        void Resoudre(TypeAlogorithmeEnum type);
+        IEnumerable<IDeplacement> Resoudre(TypeAlogorithmeEnum type);
     }
 }

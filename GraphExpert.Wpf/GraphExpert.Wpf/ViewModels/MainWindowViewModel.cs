@@ -87,7 +87,7 @@ namespace GraphExpert.Wpf.ViewModels
             _animation = animation;
 
             // Initialisation des commandes.
-            CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
+            CommandeResoudre = new DelegateCommand<ItemsControl>(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
             CommandeDeplacer = new DelegateCommand<ItemsControl>(DeplacerExecuter, PeutDeplacer);
         }
@@ -314,7 +314,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Résoudre par l'algorithme choisi.
         /// </summary>
-        public bool PeutResoudre()
+        public bool PeutResoudre(ItemsControl controleListe)
         {
             return true;
         }
@@ -322,9 +322,9 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Résoudre par l'algorithme choisi.
         /// </summary>
-        public void Resoudre()
+        public void Resoudre(ItemsControl controleListe)
         {
-            _resolveur.Resoudre(_algorithme);
+            _animation.Animer(controleListe, Formes, _resolveur.Resoudre(_algorithme));
         }
 
         /// <summary>
