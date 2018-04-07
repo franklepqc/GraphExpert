@@ -252,8 +252,8 @@ namespace GraphExpert.Wpf.ViewModels
         public void DeplacerExecuter(ItemsControl controleListe)
         {
             // Récupérer l'agent affecté.
-            var agent = _repoAgents.Obtenir().SingleOrDefault(p => p.Id == AgentId);
-            var agentVM = Formes.OfType<AgentVM>().Single(p => p.NoeudId == Port.NoeudId);
+            var agent = _repoAgents.Obtenir(AgentId);
+            var agentVM = Formes.OfType<AgentVM>().Single(p => p.Id == AgentId);
 
             // Effectuer l'animation.
             var conteneur = controleListe.ItemContainerGenerator.ContainerFromItem(agentVM);
@@ -317,6 +317,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         /// <param name="x">Coordonnée X à l'écran.</param>
         /// <param name="y">Coordonnée Y à l'écran.</param>
+        /// <param name="id">N° de l'agent.</param>
         /// <param name="noeudId">N° du noeud.</param>
         internal void AjouterAgent(double x, double y, byte noeudId)
         {
@@ -325,7 +326,7 @@ namespace GraphExpert.Wpf.ViewModels
 
             // Afficher.
             Agents.Add(agent);
-            Formes.Add(new AgentVM(x, y, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
+            Formes.Add(new AgentVM(x, y, agent.Id, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
         }
 
         #endregion Methods

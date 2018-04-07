@@ -47,6 +47,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\IRepoAgents.cs" />
     <Compile Include="Repos\IRepoAretes.cs" />
+    <Compile Include="Repos\IRepoBase.cs" />
+    <Compile Include="Repos\IRepoCleBase.cs" />
     <Compile Include="Repos\IRepoNoeuds.cs" />
     <Compile Include="Repos\IRepoPorts.cs" />
   </ItemGroup>

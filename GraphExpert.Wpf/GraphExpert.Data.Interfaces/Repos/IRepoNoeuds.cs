@@ -1,16 +1,9 @@
 ﻿using GraphExpert.Data.Interfaces.Modeles;
-using System.Collections.Generic;
 
 namespace GraphExpert.Data.Interfaces.Repos
 {
-    public interface IRepoNoeuds
+    public interface IRepoNoeuds : IRepoCleBase<INoeud, byte>
     {
         INoeud Ajouter(string etiquette);
-
-        void Supprimer(byte id);
-
-        void Vider();
-
-        IEnumerable<INoeud> Obtenir();
     }
 }

@@ -4,7 +4,6 @@ using GraphExpert.Wpf.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 
 namespace GraphExpert.Wpf.Services

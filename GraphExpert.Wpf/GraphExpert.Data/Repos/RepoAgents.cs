@@ -48,6 +48,13 @@ namespace GraphExpert.Data.Repos
         public IEnumerable<IAgent> Obtenir() => _agents;
 
         /// <summary>
+        /// Obtenir l'agent demandé.
+        /// </summary>
+        /// <param name="id">N° de l'agent.</param>
+        /// <returns>Agent.</returns>
+        public IAgent Obtenir(byte id) => _agents.SingleOrDefault(p => p.Id == id);
+
+        /// <summary>
         /// Retire l'agent en question.
         /// </summary>
         /// <param name="id">Identifiant de l'agent.</param>

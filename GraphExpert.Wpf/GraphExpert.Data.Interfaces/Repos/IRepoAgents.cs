@@ -1,16 +1,9 @@
 ﻿using GraphExpert.Data.Interfaces.Modeles;
-using System.Collections.Generic;
 
 namespace GraphExpert.Data.Interfaces.Repos
 {
-    public interface IRepoAgents
+    public interface IRepoAgents : IRepoCleBase<IAgent, byte>
     {
-        IEnumerable<IAgent> Obtenir();
-
         IAgent Ajouter(byte noeudId);
-
-        void Supprimer(byte id);
-
-        void Vider();
     }
 }

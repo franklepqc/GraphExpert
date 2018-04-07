@@ -7,10 +7,11 @@ namespace GraphExpert.Wpf.Models
     {
         private double _x, _y;
 
-        public AgentVM(double x, double y, byte noeudId, Color c)
+        public AgentVM(double x, double y, byte id, byte noeudId, Color c)
         {
             _x = x;
             _y = y;
+            Id = id;
             NoeudId = noeudId;
             Couleur = new SolidColorBrush(c);
         }
@@ -40,6 +41,8 @@ namespace GraphExpert.Wpf.Models
         public byte NoeudId { get; set; }
 
         public Brush Couleur { get; set; }
+
+        public byte Id { get; internal set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

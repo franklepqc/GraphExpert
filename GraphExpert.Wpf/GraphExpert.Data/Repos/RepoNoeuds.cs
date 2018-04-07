@@ -14,7 +14,7 @@ namespace GraphExpert.Data.Repos
         /// <summary>
         /// Conteneur.
         /// </summary>
-        private IList<INoeud> _arrets = new List<INoeud>();
+        private IList<INoeud> _noeuds = new List<INoeud>();
 
         /// <summary>
         /// Ajoute un nouvel arrêt.
@@ -23,9 +23,9 @@ namespace GraphExpert.Data.Repos
         /// <returns>Le nouvel arrêt.</returns>
         public INoeud Ajouter(string etiquette)
         {
-            var arret = new Noeud((_arrets.Any() ? (byte)(_arrets.Max(k => k.Id) + 1) : (byte)1), etiquette);
+            var arret = new Noeud((_noeuds.Any() ? (byte)(_noeuds.Max(k => k.Id) + 1) : (byte)1), etiquette);
 
-            _arrets.Add(arret);
+            _noeuds.Add(arret);
 
             return arret;
         }
@@ -34,7 +34,14 @@ namespace GraphExpert.Data.Repos
         /// Obtenir tous les arrêts.
         /// </summary>
         /// <returns>Arrêts</returns>
-        public IEnumerable<INoeud> Obtenir() => _arrets;
+        public IEnumerable<INoeud> Obtenir() => _noeuds;
+
+        /// <summary>
+        /// Obtenir le noeud demandé.
+        /// </summary>
+        /// <param name="id">N° du noeud.</param>
+        /// <returns>Noeud.</returns>
+        public INoeud Obtenir(byte id) => _noeuds.SingleOrDefault(p => p.Id == id);
 
         /// <summary>
         /// Retire l'arrêt en question.
@@ -42,7 +49,7 @@ namespace GraphExpert.Data.Repos
         /// <param name="id">Identifiant de l'arrêt.</param>
         public void Supprimer(byte id)
         {
-            _arrets.Remove(_arrets.Single(p => p.Id == id));
+            _noeuds.Remove(_noeuds.Single(p => p.Id == id));
         }
 
         /// <summary>
@@ -50,7 +57,7 @@ namespace GraphExpert.Data.Repos
         /// </summary>
         public void Vider()
         {
-            _arrets.Clear();
+            _noeuds.Clear();
         }
     }
 }
