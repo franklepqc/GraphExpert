@@ -328,12 +328,15 @@ namespace GraphExpert.Wpf.ViewModels
             // Ajout dans la persistance.
             var agent = _repoAgents.Ajouter(noeudId, etiquette);
 
-            // Afficher.
-            Agents.Add(agent);
-            Formes.Add(new AgentVM(x, y, agent.Id, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
+            if (null != agent)
+            {
+                // Afficher.
+                Agents.Add(agent);
+                Formes.Add(new AgentVM(x, y, agent.Id, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
 
-            // Aviser l'interface pour rafraichir les commandes.
-            CommandeResoudre.RaiseCanExecuteChanged();
+                // Aviser l'interface pour rafraichir les commandes.
+                CommandeResoudre.RaiseCanExecuteChanged();
+            }
         }
 
         /// <summary>
