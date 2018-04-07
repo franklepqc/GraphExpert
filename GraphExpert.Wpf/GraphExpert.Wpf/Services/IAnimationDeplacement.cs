@@ -1,6 +1,4 @@
-﻿using GraphExpert.Wpf.Controles;
-using GraphExpert.Wpf.Interfaces;
-using GraphExpert.Wpf.Models;
+﻿using GraphExpert.Wpf.Interfaces;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -21,7 +19,9 @@ namespace GraphExpert.Wpf.Services
         /// <summary>
         /// Permet d'animer avec les déplacements passés en paramètre.
         /// </summary>
+        /// <param name="controleListe">Liste où en faire l'exécution.</param>
+        /// <param name="noeuds">Noeuds.</param>
         /// <param name="deplacements">Déplacements à effectuer.</param>
-        void Animer(IEnumerable<IDeplacement> deplacements);
+        void Animer(ItemsControl controleListe, IEnumerable<IPositionCanvas> noeuds, IEnumerable<IDeplacement> deplacements);
     }
 }

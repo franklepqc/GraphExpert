@@ -40,11 +40,11 @@ namespace GraphExpert.Wpf.Services
         /// Permet d'animer avec les déplacements passés en paramètre.
         /// </summary>
         /// <param name="deplacements">Déplacements à effectuer.</param>
-        public void Animer(IEnumerable<IDeplacement> deplacements)
+        public void Animer(ItemsControl controleListe, IEnumerable<IPositionCanvas> noeuds, IEnumerable<IDeplacement> deplacements)
         {
             foreach (var deplacement in deplacements)
             {
-                Executer(null, deplacement.AgentId, deplacement.PortId, null);
+                Executer(controleListe, deplacement.AgentId, deplacement.PortId, noeuds);
             }
         }
 
