@@ -28,13 +28,14 @@ namespace GraphExpert.Data.Repos
         /// Ajoute un nouvel agent.
         /// </summary>
         /// <param name="noeudId">N° du noeud attaché.</param>
+        /// <param name="etiquette">Étiquette.</param>
         /// <returns>Le nouvel agent.</returns>
-        public IAgent Ajouter(byte noeudId)
+        public IAgent Ajouter(byte noeudId, string etiquette)
         {
             var id = (byte)(_agents.Any() ? (_agents.Max(k => k.Id) + 1) : 1);
             var couleur = _couleurs[_indexCouleurs++];
 
-            var agent = new Agent(id, noeudId, couleur);
+            var agent = new Agent(id, noeudId, etiquette, couleur);
 
             _agents.Add(agent);
 

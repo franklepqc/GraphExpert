@@ -6,6 +6,8 @@
 
         byte NoeudId { get; set; }
 
+        string Etiquette { get; set; }
+
         string Couleur { get; }
     }
 }

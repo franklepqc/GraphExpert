@@ -39,7 +39,7 @@ namespace GraphExpert.Wpf.Views
 
             if (null != noeud)
             {
-                Modele.AjouterAgent(noeud.X, noeud.Y, noeud.Id);
+                Modele.AjouterAgent(noeud.X, noeud.Y, noeud.Id, string.Empty);
             }
         }
 

@@ -243,6 +243,9 @@ namespace GraphExpert.Wpf.ViewModels
 
                 // Retirer l'arrêt.
                 _arret1 = null;
+
+                // Repopuler la liste des ports.
+                PopulerPorts(AgentId);
             }
         }
 
@@ -317,12 +320,12 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         /// <param name="x">Coordonnée X à l'écran.</param>
         /// <param name="y">Coordonnée Y à l'écran.</param>
-        /// <param name="id">N° de l'agent.</param>
         /// <param name="noeudId">N° du noeud.</param>
-        internal void AjouterAgent(double x, double y, byte noeudId)
+        /// <param name="etiquette">Etiquette.</param>
+        internal void AjouterAgent(double x, double y, byte noeudId, string etiquette)
         {
             // Ajout dans la persistance.
-            var agent = _repoAgents.Ajouter(noeudId);
+            var agent = _repoAgents.Ajouter(noeudId, etiquette);
 
             // Afficher.
             Agents.Add(agent);
