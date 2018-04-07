@@ -292,6 +292,8 @@ namespace GraphExpert.Wpf.ViewModels
             // Vider les repos.
             _repoArrets.Vider();
             _repoLiaisons.Vider();
+            _repoPorts.Vider();
+            _repoAgents.Vider();
 
             // Vider l'instance en mémoire d'un arrêt cliqué.
             _arret1 = null;
