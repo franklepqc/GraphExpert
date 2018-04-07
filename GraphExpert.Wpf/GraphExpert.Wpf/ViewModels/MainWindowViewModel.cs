@@ -23,6 +23,7 @@ namespace GraphExpert.Wpf.ViewModels
     /// </summary>
     public class MainWindowViewModel : Prism.Mvvm.BindableBase
     {
+
         #region Fields
 
         /// <summary>
@@ -106,22 +107,6 @@ namespace GraphExpert.Wpf.ViewModels
         }
 
         /// <summary>
-        /// Populer la liste des ports.
-        /// </summary>
-        /// <param name="agentId"></param>
-        private void PopulerPorts(byte agentId)
-        {
-            Ports.Clear();
-
-            var agent = _repoAgents.Obtenir(agentId);
-
-            if (null != agent)
-            {
-                Ports.AddRange(_repoPorts.ObtenirPourNoeud(agent.NoeudId));
-            }
-        }
-
-        /// <summary>
         /// Agents.
         /// </summary>
         public ObservableCollection<IAgent> Agents { get; private set; } = new ObservableCollection<IAgent>();
@@ -139,7 +124,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Bouton 'résoudre'.
         /// </summary>
-        public ICommand CommandeResoudre { get; private set; }
+        public DelegateCommand<ItemsControl> CommandeResoudre { get; private set; }
 
         /// <summary>
         /// Sélection du choix.
@@ -219,6 +204,9 @@ namespace GraphExpert.Wpf.ViewModels
 
             // Afficher.
             Formes.Add(new StopVM(x, y, arret.Id));
+
+            // Aviser l'interface pour résoudre.
+            CommandeResoudre.RaiseCanExecuteChanged();
         }
 
         /// <summary>
@@ -251,19 +239,12 @@ namespace GraphExpert.Wpf.ViewModels
                 // Retirer l'arrêt.
                 _arret1 = null;
 
+                // Aviser l'interface pour résoudre.
+                CommandeResoudre.RaiseCanExecuteChanged();
+
                 // Repopuler la liste des ports.
                 PopulerPorts(AgentId);
             }
-        }
-
-        /// <summary>
-        /// Ajoute le port au noeud demandé.
-        /// </summary>
-        /// <param name="noeud">Noeud.</param>
-        /// <param name="port">¨Port.</param>
-        private void AjouterPortVM(StopVM noeud, IPort port)
-        {
-            Formes.Add(new PortVM(port, noeud.X, noeud.Y));
         }
 
         /// <summary>
@@ -300,6 +281,9 @@ namespace GraphExpert.Wpf.ViewModels
             Formes.Clear();
             Agents.Clear();
             Ports.Clear();
+
+            // Aviser l'interface pour rafraichir les commandes.
+            CommandeResoudre.RaiseCanExecuteChanged();
             CommandeDeplacer.RaiseCanExecuteChanged();
         }
 
@@ -316,7 +300,15 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public bool PeutResoudre(ItemsControl controleListe)
         {
-            return true;
+            // Autorisation accordée quand l'interface possède :
+            // 2 agents
+            // 3 noeuds
+            // 3 arêtes et
+            // 6 ports.
+            return ((2 <= Formes.OfType<AgentVM>()?.Count()) &&
+                (3 <= Formes.OfType<StopVM>()?.Count()) &&
+                (3 <= Formes.OfType<LineVM>()?.Count()) &&
+                (6 <= Formes.OfType<PortVM>()?.Count()));
         }
 
         /// <summary>
@@ -342,6 +334,38 @@ namespace GraphExpert.Wpf.ViewModels
             // Afficher.
             Agents.Add(agent);
             Formes.Add(new AgentVM(x, y, agent.Id, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
+
+            // Aviser l'interface pour rafraichir les commandes.
+            CommandeResoudre.RaiseCanExecuteChanged();
+        }
+
+        /// <summary>
+        /// Ajoute le port au noeud demandé.
+        /// </summary>
+        /// <param name="noeud">Noeud.</param>
+        /// <param name="port">¨Port.</param>
+        private void AjouterPortVM(StopVM noeud, IPort port)
+        {
+            Formes.Add(new PortVM(port, noeud.X, noeud.Y));
+
+            // Aviser l'interface pour résoudre.
+            CommandeResoudre.RaiseCanExecuteChanged();
+        }
+
+        /// <summary>
+        /// Populer la liste des ports.
+        /// </summary>
+        /// <param name="agentId"></param>
+        private void PopulerPorts(byte agentId)
+        {
+            Ports.Clear();
+
+            var agent = _repoAgents.Obtenir(agentId);
+
+            if (null != agent)
+            {
+                Ports.AddRange(_repoPorts.ObtenirPourNoeud(agent.NoeudId));
+            }
         }
 
         #endregion Methods
