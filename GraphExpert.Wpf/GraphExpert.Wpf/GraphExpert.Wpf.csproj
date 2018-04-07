@@ -88,12 +88,15 @@
     <Compile Include="Controles\Port.xaml.cs">
       <DependentUpon>Port.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IPositionCanvas.cs" />
+    <Compile Include="Interfaces\IPositionCanvasDeuxPoints.cs" />
     <Compile Include="Models\LineVM.cs" />
     <Compile Include="Models\AgentVM.cs" />
     <Compile Include="Models\PortVM.cs" />
     <Compile Include="SelecteurDataTemplate.cs" />
     <Compile Include="Services\AnimationDeplacement.cs" />
     <Compile Include="Services\IAnimationDeplacement.cs" />
+    <Compile Include="Services\IDeplacement.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Controles\Agent.xaml">
       <Generator>MSBuild:Compile</Generator>

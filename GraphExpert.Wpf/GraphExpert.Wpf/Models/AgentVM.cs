@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using GraphExpert.Wpf.Interfaces;
+using System.ComponentModel;
 using System.Windows.Media;
 
 namespace GraphExpert.Wpf.Models
 {
-    public class AgentVM : INotifyPropertyChanged
+    public class AgentVM : INotifyPropertyChanged, IPositionCanvas
     {
         private double _x, _y;
 

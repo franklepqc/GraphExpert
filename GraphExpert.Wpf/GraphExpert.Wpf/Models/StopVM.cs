@@ -1,6 +1,8 @@
-﻿namespace GraphExpert.Wpf.Models
+﻿using GraphExpert.Wpf.Interfaces;
+
+namespace GraphExpert.Wpf.Models
 {
-    public class StopVM
+    public class StopVM : IPositionCanvas
     {
         public StopVM(double x, double y, byte id)
         {

@@ -79,5 +79,13 @@ namespace GraphExpert.Data.Repos
         /// </summary>
         /// <returns></returns>
         public IEnumerable<IArete> Obtenir() => _liaisons;
+
+        /// <summary>
+        /// Obtenir une liaison.
+        /// </summary>
+        /// <param name="noeudIdDepart">N° du noeud de départ.</param>
+        /// <param name="portIdDepart">Point de départ.</param>
+        /// <returns>Liaison unique.</returns>
+        public IArete Obtenir(byte noeudIdDepart, byte portIdDepart) => _liaisons.SingleOrDefault(p => p.NoeudIdDepart == noeudIdDepart && p.PortIdDepart == portIdDepart);
     }
 }

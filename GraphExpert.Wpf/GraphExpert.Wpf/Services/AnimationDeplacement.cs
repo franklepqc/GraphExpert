@@ -1,9 +1,12 @@
 ﻿using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Controles;
+using GraphExpert.Wpf.Interfaces;
 using GraphExpert.Wpf.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace GraphExpert.Wpf.Services
@@ -16,6 +19,7 @@ namespace GraphExpert.Wpf.Services
         private IRepoNoeuds _repoNoeuds;
         private IRepoPorts _repoPorts;
         private IRepoAretes _repoAretes;
+        private IRepoAgents _repoAgents;
 
         /// <summary>
         /// Constructeur par défaut.
@@ -23,11 +27,25 @@ namespace GraphExpert.Wpf.Services
         /// <param name="repoNoeuds">Repository des noeuds.</param>
         /// <param name="repoPorts">Repository des ports.</param>
         /// <param name="repoAretes">Repository des arêtes.</param>
-        public AnimationDeplacement(IRepoNoeuds repoNoeuds, IRepoPorts repoPorts, IRepoAretes repoAretes)
+        /// <param name="repoAgents">Repository des agents.</param>
+        public AnimationDeplacement(IRepoNoeuds repoNoeuds, IRepoPorts repoPorts, IRepoAretes repoAretes, IRepoAgents repoAgents)
         {
             _repoNoeuds = repoNoeuds;
             _repoPorts = repoPorts;
             _repoAretes = repoAretes;
+            _repoAgents = repoAgents;
+        }
+
+        /// <summary>
+        /// Permet d'animer avec les déplacements passés en paramètre.
+        /// </summary>
+        /// <param name="deplacements">Déplacements à effectuer.</param>
+        public void Animer(IEnumerable<IDeplacement> deplacements)
+        {
+            foreach (var deplacement in deplacements)
+            {
+                Executer(null, deplacement.AgentId, deplacement.PortId, null);
+            }
         }
 
         /// <summary>
@@ -36,17 +54,19 @@ namespace GraphExpert.Wpf.Services
         /// <param name="noeudId">N° du noeud.</param>
         /// <param name="portId">N° du port.</param>
         /// <returns></returns>
-        public byte Executer(Agent agent, IEnumerable<StopVM> noeuds, byte noeudId, byte portId)
+        public void Executer(ItemsControl controleListe, byte agentId, byte portId, IEnumerable<IPositionCanvas> noeuds)
         {
             // Variables de travail.
             var storyBoard1 = new Storyboard();
             var storyBoard2 = new Storyboard();
-            var noeudDest = ObtenirNoeud(noeudId, portId, noeuds);            
+            var agentVM = noeuds.OfType<AgentVM>().SingleOrDefault(p => p.Id == agentId);
+            var controleAgent = VisualTreeHelper.GetChild(controleListe.ItemContainerGenerator.ContainerFromItem(agentVM), 0) as Agent;
+            var noeudDest = ObtenirNoeud(agentId, portId, noeuds.OfType<StopVM>());            
 
             var duree = TimeSpan.FromSeconds(1d);
-            var lineaireXDebut = new LinearDoubleKeyFrame(agent.Left, KeyTime.FromTimeSpan(TimeSpan.Zero));
+            var lineaireXDebut = new LinearDoubleKeyFrame(controleAgent.Left, KeyTime.FromTimeSpan(TimeSpan.Zero));
             var lineaireXFin = new LinearDoubleKeyFrame(noeudDest.X, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));
-            var lineaireYDebut = new LinearDoubleKeyFrame(agent.Top, KeyTime.FromTimeSpan(TimeSpan.Zero));
+            var lineaireYDebut = new LinearDoubleKeyFrame(controleAgent.Top, KeyTime.FromTimeSpan(TimeSpan.Zero));
             var lineaireYFin = new LinearDoubleKeyFrame(noeudDest.Y, KeyTime.FromTimeSpan(TimeSpan.Zero + duree));
             var collection1 = new DoubleAnimationUsingKeyFrames();
             var collection2 = new DoubleAnimationUsingKeyFrames();
@@ -64,28 +84,31 @@ namespace GraphExpert.Wpf.Services
                 .Add(collection2);
 
             // Assigner la cible de l'animation.
-            Storyboard.SetTarget(storyBoard1, agent);
+            Storyboard.SetTarget(storyBoard1, controleAgent);
             Storyboard.SetTargetProperty(storyBoard1, new System.Windows.PropertyPath(Agent.LeftProperty.Name));
-            Storyboard.SetTarget(storyBoard2, agent);
+            Storyboard.SetTarget(storyBoard2, controleAgent);
             Storyboard.SetTargetProperty(storyBoard2, new System.Windows.PropertyPath(Agent.TopProperty.Name));
 
             // Démarrer l'animation.
             storyBoard1.Begin();
             storyBoard2.Begin();
 
-            return noeudDest.Id;
+            // Changer le noeud de l'agent.
+            agentVM.NoeudId = noeudDest.Id;
+            _repoAgents.Obtenir(agentId).NoeudId = noeudDest.Id;
         }
 
         /// <summary>
         /// Obtenir le noeud (visuel) pour l'animation.
         /// </summary>
-        /// <param name="noeudId">N° du noeud de départ.</param>
+        /// <param name="agentId">N° de l'agent de départ.</param>
         /// <param name="portId">N° du pord de départ.</param>
         /// <param name="noeuds">Noeuds (visuel).</param>
         /// <returns>Noeud d'arrivée.</returns>
-        private StopVM ObtenirNoeud(byte noeudId, byte portId, IEnumerable<StopVM> noeuds)
+        private StopVM ObtenirNoeud(byte agentId, byte portId, IEnumerable<StopVM> noeuds)
         {
-            var arete = _repoAretes.Obtenir().SingleOrDefault(p => p.NoeudIdDepart == noeudId && p.PortIdDepart == portId);
+            var noeudIdDepart = _repoAgents.Obtenir(agentId).NoeudId;
+            var arete = _repoAretes.Obtenir(noeudIdDepart, portId);
             return noeuds.SingleOrDefault(p => p.Id == arete.NoeudIdArrivee);
         }
     }

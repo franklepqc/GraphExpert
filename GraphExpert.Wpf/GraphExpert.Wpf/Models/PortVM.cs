@@ -1,8 +1,9 @@
 ﻿using GraphExpert.Data.Interfaces.Modeles;
+using GraphExpert.Wpf.Interfaces;
 
 namespace GraphExpert.Wpf.Models
 {
-    public class PortVM
+    public class PortVM : IPositionCanvas
     {
         private IPort _port;
 
@@ -15,9 +16,9 @@ namespace GraphExpert.Wpf.Models
 
         public byte Id => _port.Id;
 
-        public double X { get; }
+        public double X { get; set; }
 
-        public double Y { get; }
+        public double Y { get; set; }
 
         public int ZIndex => 3;
     }

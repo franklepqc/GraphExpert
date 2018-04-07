@@ -42,8 +42,8 @@
                     </local:SelecteurDataTemplate.TemplateAgent>
                     <local:SelecteurDataTemplate.TemplateLiaison>
                         <DataTemplate DataType="{x:Type vms:LineVM}">
-                            <Line X1="{Binding Path=X1}"
-                                  Y1="{Binding Path=Y1}"
+                            <Line X1="{Binding Path=X}"
+                                  Y1="{Binding Path=Y}"
                                   X2="{Binding Path=X2}"
                                   Y2="{Binding Path=Y2}"
                                   Stroke="Black"

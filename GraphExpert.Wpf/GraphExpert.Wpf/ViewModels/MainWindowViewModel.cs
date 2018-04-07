@@ -3,6 +3,7 @@ using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Modeles;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Wpf.Controles;
+using GraphExpert.Wpf.Interfaces;
 using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.Services;
 using Prism.Commands;
@@ -185,7 +186,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Formes à afficher.
         /// </summary>
-        public ObservableCollection<object> Formes { get; private set; } = new ObservableCollection<object>();
+        public ObservableCollection<IPositionCanvas> Formes { get; private set; } = new ObservableCollection<IPositionCanvas>();
 
         /// <summary>
         /// N° du port sélectionné.
@@ -270,17 +271,10 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void DeplacerExecuter(ItemsControl controleListe)
         {
-            // Récupérer l'agent affecté.
-            var agent = _repoAgents.Obtenir(AgentId);
-            var agentVM = Formes.OfType<AgentVM>().Single(p => p.Id == AgentId);
-
             // Effectuer l'animation.
-            var conteneur = controleListe.ItemContainerGenerator.ContainerFromItem(agentVM);
-            var noeudIdDest = _animation.Executer(VisualTreeHelper.GetChild(conteneur, 0) as Agent, Formes.OfType<StopVM>(), Port.NoeudId, Port.Id);
+            _animation.Executer(controleListe, AgentId, Port.Id, Formes);
 
-            // Déplacer.
-            agent.NoeudId = noeudIdDest;
-            agentVM.NoeudId = noeudIdDest;
+            // Repopuler la liste des ports disponibles.
             PopulerPorts(AgentId);
         }
 
