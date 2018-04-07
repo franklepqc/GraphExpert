@@ -38,31 +38,34 @@ namespace GraphExpert.Wpf.Services
         }
 
         /// <summary>
-        /// Permet d'animer avec les déplacements passés en paramètre.
+        /// Construire l'animation pour nous.
         /// </summary>
+        /// <param name="controleListe">Contrôle de la liste.</param>
+        /// <param name="noeuds">Noeuds dans l'interface.</param>
         /// <param name="deplacements">Déplacements à effectuer.</param>
-        public void Animer(ItemsControl controleListe, IEnumerable<IPositionCanvas> noeuds, IEnumerable<IDeplacement> deplacements)
+        public void Animer(ItemsControl controleListe, IEnumerable<IPositionCanvas> noeuds, params IDeplacement[] deplacements)
         {
             foreach (var deplacement in deplacements)
             {
-                Executer(controleListe, deplacement.AgentId, deplacement.PortId, noeuds);
-            }
+                AnimerAgent(controleListe, deplacement.AgentId, deplacement.PortId, noeuds);
+            }            
         }
 
         /// <summary>
-        /// Construire l'animation pour nous.
+        /// Animer l'agent.
         /// </summary>
-        /// <param name="noeudId">N° du noeud.</param>
-        /// <param name="portId">N° du port.</param>
-        /// <returns></returns>
-        public void Executer(ItemsControl controleListe, byte agentId, byte portId, IEnumerable<IPositionCanvas> noeuds)
+        /// <param name="controleListe"></param>
+        /// <param name="agentId"></param>
+        /// <param name="portId"></param>
+        /// <param name="noeuds"></param>
+        private void AnimerAgent(ItemsControl controleListe, byte agentId, byte portId, IEnumerable<IPositionCanvas> noeuds)
         {
             // Variables de travail.
             var storyBoard1 = new Storyboard();
             var storyBoard2 = new Storyboard();
             var agentVM = noeuds.OfType<AgentVM>().SingleOrDefault(p => p.Id == agentId);
             var controleAgent = VisualTreeHelper.GetChild(controleListe.ItemContainerGenerator.ContainerFromItem(agentVM), 0) as Agent;
-            var noeudDest = ObtenirNoeud(agentId, portId, noeuds.OfType<StopVM>());            
+            var noeudDest = ObtenirNoeud(agentId, portId, noeuds.OfType<StopVM>());
 
             var duree = TimeSpan.FromSeconds(1d);
             var lineaireXDebut = new LinearDoubleKeyFrame(controleAgent.Left, KeyTime.FromTimeSpan(TimeSpan.Zero));

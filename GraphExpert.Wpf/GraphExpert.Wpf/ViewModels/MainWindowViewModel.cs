@@ -1,16 +1,13 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
-using GraphExpert.Data.Interfaces;
+using GraphExpert.Animations;
 using GraphExpert.Data.Interfaces.Modeles;
 using GraphExpert.Data.Interfaces.Repos;
-using GraphExpert.Wpf.Controles;
 using GraphExpert.Wpf.Interfaces;
 using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.Services;
 using Prism.Commands;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -253,7 +250,7 @@ namespace GraphExpert.Wpf.ViewModels
         public void DeplacerExecuter(ItemsControl controleListe)
         {
             // Effectuer l'animation.
-            _animation.Executer(controleListe, AgentId, Port.Id, Formes);
+            _animation.Animer(controleListe, Formes, new Deplacement(AgentId, Port.Id));
 
             // Repopuler la liste des ports disponibles.
             PopulerPorts(AgentId);
@@ -316,7 +313,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void Resoudre(ItemsControl controleListe)
         {
-            _animation.Animer(controleListe, Formes, _resolveur.Resoudre(_algorithme));
+            _animation.Animer(controleListe, Formes, _resolveur.Resoudre(_algorithme).ToArray());
         }
 
         /// <summary>
