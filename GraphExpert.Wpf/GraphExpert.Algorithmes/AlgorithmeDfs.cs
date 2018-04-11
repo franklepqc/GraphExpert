@@ -1,6 +1,6 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
 using GraphExpert.Animations;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GraphExpert.Algorithmes
 {
@@ -9,7 +9,7 @@ namespace GraphExpert.Algorithmes
         /// <summary>
         /// Résoudre selon l'algorithme.
         /// </summary>
-        public IEnumerable<IDeplacement> Resoudre()
+        public void Resoudre(ObservableCollection<IDeplacement> deplacements)
         {
             throw new System.NotImplementedException();
         }

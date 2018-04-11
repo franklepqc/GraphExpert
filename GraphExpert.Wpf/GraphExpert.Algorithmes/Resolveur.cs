@@ -1,6 +1,6 @@
 ﻿using GraphExpert.Algorithmes.Interfaces;
 using GraphExpert.Animations;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GraphExpert.Algorithmes
 {
@@ -28,9 +28,9 @@ namespace GraphExpert.Algorithmes
         /// </summary>
         /// <param name="type">Type algorithme.</param>
         /// <param name="matrice">Matrice des poids selon les arrêts et leurs liaisons.</param>
-        public IEnumerable<IDeplacement> Resoudre(TypeAlogorithmeEnum type)
+        public void Resoudre(TypeAlogorithmeEnum type, ObservableCollection<IDeplacement> deplacements)
         {
-            return _strategie.Obtenir(type).Resoudre();
+            _strategie.Obtenir(type).Resoudre(deplacements);
         }
     }
 }

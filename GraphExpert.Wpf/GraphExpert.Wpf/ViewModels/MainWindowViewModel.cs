@@ -7,6 +7,7 @@ using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.Services;
 using Prism.Commands;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -43,6 +44,8 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         private StopVM _arret1;
 
+        private ObservableCollection<IDeplacement> _deplacements = new ObservableCollection<IDeplacement>();
+
         /// <summary>
         /// Port sélectionné.
         /// </summary>
@@ -56,7 +59,6 @@ namespace GraphExpert.Wpf.ViewModels
         private IRepoNoeuds _repoArrets;
         private IRepoAretes _repoLiaisons;
         private IRepoPorts _repoPorts;
-
         /// <summary>
         /// Résolveur.
         /// </summary>
@@ -88,9 +90,24 @@ namespace GraphExpert.Wpf.ViewModels
             CommandeResoudre = new DelegateCommand<ItemsControl>(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
             CommandeDeplacer = new DelegateCommand<ItemsControl>(DeplacerExecuter, PeutDeplacer);
+
+            _deplacements.CollectionChanged += ListeDeplacements_CollectionChanged;
         }
 
         #endregion Constructors
+
+        #region Destructors
+
+        /// <summary>
+        /// Disposer des évènements.
+        /// </summary>
+        ~MainWindowViewModel()
+        {
+            _deplacements.CollectionChanged -= ListeDeplacements_CollectionChanged;
+            _deplacements = null;
+        }
+
+        #endregion Destructors
 
         #region Properties
 
@@ -249,8 +266,8 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void DeplacerExecuter(ItemsControl controleListe)
         {
-            // Effectuer l'animation.
-            _animation.Animer(controleListe, Formes, new Deplacement(AgentId, Port.Id));
+            // Ajouter le déplacement dans la liste.
+            ListeDeplacements_CollectionChanged(controleListe, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new Deplacement(AgentId, Port.Id)));
 
             // Repopuler la liste des ports disponibles.
             PopulerPorts(AgentId);
@@ -313,7 +330,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void Resoudre(ItemsControl controleListe)
         {
-            _animation.Animer(controleListe, Formes, _resolveur.Resoudre(_algorithme).ToArray());
+            _resolveur.Resoudre(_algorithme, _deplacements);
         }
 
         /// <summary>
@@ -353,6 +370,19 @@ namespace GraphExpert.Wpf.ViewModels
         }
 
         /// <summary>
+        /// Sur changement de la collection, animer!
+        /// </summary>
+        /// <param name="sender">Objet envoyant l'évènement.</param>
+        /// <param name="e">Arguments de notification.</param>
+        private void ListeDeplacements_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                _animation.Animer(sender as ItemsControl, Formes, e.NewItems.OfType<IDeplacement>().ToArray());
+            }
+        }
+
+        /// <summary>
         /// Populer la liste des ports.
         /// </summary>
         /// <param name="agentId"></param>
@@ -369,5 +399,6 @@ namespace GraphExpert.Wpf.ViewModels
         }
 
         #endregion Methods
+
     }
 }

@@ -1,10 +1,10 @@
 ﻿using GraphExpert.Animations;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GraphExpert.Algorithmes.Interfaces
 {
     public interface IAlgorithme
     {
-        IEnumerable<IDeplacement> Resoudre();
+        void Resoudre(ObservableCollection<IDeplacement> deplacements);
     }
 }
