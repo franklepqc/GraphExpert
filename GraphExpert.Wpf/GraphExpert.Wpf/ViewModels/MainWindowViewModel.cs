@@ -25,6 +25,11 @@ namespace GraphExpert.Wpf.ViewModels
         #region Fields
 
         /// <summary>
+        /// Contrôle des items.
+        /// </summary>
+        private ItemsControl _itemsControl;
+
+        /// <summary>
         /// Agent sélectionné.
         /// </summary>
         private byte _agentId;
@@ -44,6 +49,9 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         private StopVM _arret1;
 
+        /// <summary>
+        /// Déplacements.
+        /// </summary>
         private ObservableCollection<IDeplacement> _deplacements = new ObservableCollection<IDeplacement>();
 
         /// <summary>
@@ -59,6 +67,7 @@ namespace GraphExpert.Wpf.ViewModels
         private IRepoNoeuds _repoArrets;
         private IRepoAretes _repoLiaisons;
         private IRepoPorts _repoPorts;
+
         /// <summary>
         /// Résolveur.
         /// </summary>
@@ -87,9 +96,9 @@ namespace GraphExpert.Wpf.ViewModels
             _animation = animation;
 
             // Initialisation des commandes.
-            CommandeResoudre = new DelegateCommand<ItemsControl>(Resoudre, PeutResoudre);
+            CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
-            CommandeDeplacer = new DelegateCommand<ItemsControl>(DeplacerExecuter, PeutDeplacer);
+            CommandeDeplacer = new DelegateCommand(DeplacerExecuter, PeutDeplacer);
 
             _deplacements.CollectionChanged += ListeDeplacements_CollectionChanged;
         }
@@ -128,7 +137,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Commande déplacer.
         /// </summary>
-        public DelegateCommand<ItemsControl> CommandeDeplacer { get; private set; }
+        public DelegateCommand CommandeDeplacer { get; private set; }
 
         /// <summary>
         /// Menu contextuel 'Nettoyer'.
@@ -138,7 +147,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Bouton 'résoudre'.
         /// </summary>
-        public DelegateCommand<ItemsControl> CommandeResoudre { get; private set; }
+        public DelegateCommand CommandeResoudre { get; private set; }
 
         /// <summary>
         /// Sélection du choix.
@@ -262,12 +271,21 @@ namespace GraphExpert.Wpf.ViewModels
         }
 
         /// <summary>
+        /// Assigner la valeur du contrôle (pour les déplacements).
+        /// </summary>
+        /// <param name="itemsControl">Contrôle.</param>
+        public void AssignerItemsControl(ItemsControl itemsControl)
+        {
+            _itemsControl = itemsControl;
+        }
+
+        /// <summary>
         /// Effectuer le déplacement.
         /// </summary>
-        public void DeplacerExecuter(ItemsControl controleListe)
+        public void DeplacerExecuter()
         {
             // Ajouter le déplacement dans la liste.
-            ListeDeplacements_CollectionChanged(controleListe, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new Deplacement(AgentId, Port.Id)));
+            ListeDeplacements_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new Deplacement(AgentId, Port.Id)));
 
             // Repopuler la liste des ports disponibles.
             PopulerPorts(AgentId);
@@ -304,7 +322,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Détermine si on peut déplacer.
         /// </summary>
-        public bool PeutDeplacer(ItemsControl controleListe)
+        public bool PeutDeplacer()
         {
             return (_agentId != 0 && _port != null);
         }
@@ -312,7 +330,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Résoudre par l'algorithme choisi.
         /// </summary>
-        public bool PeutResoudre(ItemsControl controleListe)
+        public bool PeutResoudre()
         {
             // Autorisation accordée quand l'interface possède :
             // 2 agents
@@ -328,7 +346,7 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Résoudre par l'algorithme choisi.
         /// </summary>
-        public void Resoudre(ItemsControl controleListe)
+        public void Resoudre()
         {
             _resolveur.Resoudre(_algorithme, _deplacements);
         }
@@ -378,7 +396,7 @@ namespace GraphExpert.Wpf.ViewModels
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                _animation.Animer(sender as ItemsControl, Formes, e.NewItems.OfType<IDeplacement>().ToArray());
+                _animation.Animer(_itemsControl, Formes, e.NewItems.OfType<IDeplacement>().ToArray());
             }
         }
 

@@ -1,9 +1,7 @@
-﻿using GraphExpert.Wpf.Controles;
-using GraphExpert.Wpf.Models;
+﻿using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace GraphExpert.Wpf.Views
 {
@@ -15,6 +13,9 @@ namespace GraphExpert.Wpf.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            // Assigner le contrôle pour les animations.
+            Modele.AssignerItemsControl(controleListe);
         }
 
         public MainWindowViewModel Modele => DataContext as MainWindowViewModel;

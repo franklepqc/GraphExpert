@@ -1,7 +1,5 @@
 ﻿using GraphExpert.Algorithmes;
 using GraphExpert.Algorithmes.Interfaces;
-using GraphExpert.Data;
-using GraphExpert.Data.Interfaces;
 using GraphExpert.Data.Interfaces.Repos;
 using GraphExpert.Data.Repos;
 using GraphExpert.Wpf.Services;
