@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GraphExpert.Data.Interfaces.Modeles
 {
@@ -7,6 +8,6 @@ namespace GraphExpert.Data.Interfaces.Modeles
         byte Id { get; }
         string Etiquette { get; }
         int Degree { get; set; }
-        List<IJeton> Jetons { get; set; }
+        ObservableCollection<IJeton> Jetons { get; set; }
     }
 }

@@ -64,6 +64,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <GroupBox Grid.Column="0" Header="Algorithmique">
@@ -88,7 +89,37 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Column="1" Header="Solution">
+            <GroupBox Grid.Column="1" Header="Noeuds">
+                <ListView ItemsSource="{Binding Path=Noeuds}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="N°" DisplayMemberBinding="{Binding Path=Id}" />
+                            <GridViewColumn Header="Jetons" Width="250">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                            <ListBox ItemsSource="{Binding Path=Jetons}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Rectangle Height="30" Width="30" Stroke="Black" StrokeThickness="1" Fill="{Binding Path=Couleur}" />
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                                <ListBox.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <VirtualizingStackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                                                    </ItemsPanelTemplate>
+                                                </ListBox.ItemsPanel>
+                                            </ListBox>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </GroupBox>
+
+            <GroupBox Grid.Column="2" Header="Solution">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />

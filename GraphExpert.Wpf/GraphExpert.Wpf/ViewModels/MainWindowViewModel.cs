@@ -6,6 +6,7 @@ using GraphExpert.Wpf.Interfaces;
 using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.Services;
 using Prism.Commands;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -165,6 +166,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public ObservableCollection<IPositionCanvas> Formes { get; private set; } = new ObservableCollection<IPositionCanvas>();
 
+        /// <summary>
+        /// Obtient la liste de noeuds.
+        /// </summary>
+        public IEnumerable<StopVM> Noeuds => Formes.OfType<StopVM>();
+
         #endregion Properties
 
         #region Methods
@@ -181,7 +187,8 @@ namespace GraphExpert.Wpf.ViewModels
             var arret = _repoArrets.Ajouter(etiquette);
 
             // Afficher.
-            Formes.Add(new StopVM(x, y, arret.Id));
+            Formes.Add(new StopVM(x, y, arret));
+            RaisePropertyChanged(@"Noeuds");
 
             // Aviser l'interface pour résoudre.
             CommandeResoudre.RaiseCanExecuteChanged();
@@ -249,6 +256,7 @@ namespace GraphExpert.Wpf.ViewModels
 
             // Vider l'IU.
             Formes.Clear();
+            RaisePropertyChanged(@"Noeuds");
 
             // Aviser l'interface pour rafraichir les commandes.
             CommandeResoudre.RaiseCanExecuteChanged();

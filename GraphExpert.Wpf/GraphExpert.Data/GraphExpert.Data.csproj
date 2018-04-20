@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Modeles\Agent.cs" />
     <Compile Include="Modeles\Arete.cs" />
+    <Compile Include="Modeles\Jeton.cs" />
     <Compile Include="Modeles\Noeud.cs" />
     <Compile Include="Modeles\Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
