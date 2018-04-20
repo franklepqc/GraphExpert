@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="Modeles\IAgent.cs" />
     <Compile Include="Modeles\IArete.cs" />
+    <Compile Include="Modeles\IExploration.cs" />
+    <Compile Include="Modeles\IGraphe.cs" />
+    <Compile Include="Modeles\IJeton.cs" />
     <Compile Include="Modeles\INoeud.cs" />
     <Compile Include="Modeles\IPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +54,12 @@
     <Compile Include="Repos\IRepoCleBase.cs" />
     <Compile Include="Repos\IRepoNoeuds.cs" />
     <Compile Include="Repos\IRepoPorts.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GraphExpert.Animations\GraphExpert.Animations.csproj">
+      <Project>{0d443430-3127-4b17-b3f7-40f2dd51470b}</Project>
+      <Name>GraphExpert.Animations</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

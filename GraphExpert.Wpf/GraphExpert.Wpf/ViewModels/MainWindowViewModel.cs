@@ -30,11 +30,6 @@ namespace GraphExpert.Wpf.ViewModels
         private ItemsControl _itemsControl;
 
         /// <summary>
-        /// Agent sélectionné.
-        /// </summary>
-        private byte _agentId;
-
-        /// <summary>
         /// Algorithme sélectionné.
         /// </summary>
         private TypeAlogorithmeEnum _algorithme = TypeAlogorithmeEnum.FloydWarshall;
@@ -55,15 +50,9 @@ namespace GraphExpert.Wpf.ViewModels
         private ObservableCollection<IDeplacement> _deplacements = new ObservableCollection<IDeplacement>();
 
         /// <summary>
-        /// Port sélectionné.
-        /// </summary>
-        private IPort _port;
-
-        private IRepoAgents _repoAgents;
-
-        /// <summary>
         /// Repos.
         /// </summary>
+        private IRepoAgents _repoAgents;
         private IRepoNoeuds _repoArrets;
         private IRepoAretes _repoLiaisons;
         private IRepoPorts _repoPorts;
@@ -98,7 +87,6 @@ namespace GraphExpert.Wpf.ViewModels
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
-            CommandeDeplacer = new DelegateCommand(DeplacerExecuter, PeutDeplacer);
 
             _deplacements.CollectionChanged += ListeDeplacements_CollectionChanged;
         }
@@ -119,25 +107,6 @@ namespace GraphExpert.Wpf.ViewModels
         #endregion Destructors
 
         #region Properties
-
-        /// <summary>
-        /// N° de l'agent sélectionné.
-        /// </summary>
-        public byte AgentId
-        {
-            get { return _agentId; }
-            set { SetProperty(ref _agentId, value, () => PopulerPorts(value)); }
-        }
-
-        /// <summary>
-        /// Agents.
-        /// </summary>
-        public ObservableCollection<IAgent> Agents { get; private set; } = new ObservableCollection<IAgent>();
-
-        /// <summary>
-        /// Commande déplacer.
-        /// </summary>
-        public DelegateCommand CommandeDeplacer { get; private set; }
 
         /// <summary>
         /// Menu contextuel 'Nettoyer'.
@@ -196,20 +165,6 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public ObservableCollection<IPositionCanvas> Formes { get; private set; } = new ObservableCollection<IPositionCanvas>();
 
-        /// <summary>
-        /// N° du port sélectionné.
-        /// </summary>
-        public IPort Port
-        {
-            get { return _port; }
-            set { SetProperty(ref _port, value, () => CommandeDeplacer.RaiseCanExecuteChanged()); }
-        }
-
-        /// <summary>
-        /// Ports.
-        /// </summary>
-        public ObservableCollection<IPort> Ports { get; private set; } = new ObservableCollection<IPort>();
-
         #endregion Properties
 
         #region Methods
@@ -256,6 +211,8 @@ namespace GraphExpert.Wpf.ViewModels
                 var portArri = _repoPorts.Ajouter(arret.Id);
                 _repoLiaisons.Ajouter(portDepa.NoeudId, portDepa.Id, portArri.NoeudId, portArri.Id);
                 _repoLiaisons.Ajouter(portArri.NoeudId, portArri.Id, portDepa.NoeudId, portDepa.Id);
+                _repoArrets.Obtenir(_arret1.Id).Degree = _repoArrets.Obtenir(_arret1.Id).Degree + 1;
+                _repoArrets.Obtenir(arret.Id).Degree = _repoArrets.Obtenir(arret.Id).Degree + 1;
                 AjouterPortVM(_arret1, portDepa);
                 AjouterPortVM(arret, portArri);
 
@@ -264,9 +221,6 @@ namespace GraphExpert.Wpf.ViewModels
 
                 // Aviser l'interface pour résoudre.
                 CommandeResoudre.RaiseCanExecuteChanged();
-
-                // Repopuler la liste des ports.
-                PopulerPorts(AgentId);
             }
         }
 
@@ -277,18 +231,6 @@ namespace GraphExpert.Wpf.ViewModels
         public void AssignerItemsControl(ItemsControl itemsControl)
         {
             _itemsControl = itemsControl;
-        }
-
-        /// <summary>
-        /// Effectuer le déplacement.
-        /// </summary>
-        public void DeplacerExecuter()
-        {
-            // Ajouter le déplacement dans la liste.
-            ListeDeplacements_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new Deplacement(AgentId, Port.Id)));
-
-            // Repopuler la liste des ports disponibles.
-            PopulerPorts(AgentId);
         }
 
         /// <summary>
@@ -305,26 +247,11 @@ namespace GraphExpert.Wpf.ViewModels
             // Vider l'instance en mémoire d'un arrêt cliqué.
             _arret1 = null;
 
-            // Vider les choix.
-            _agentId = 0;
-            _port = null;
-
             // Vider l'IU.
             Formes.Clear();
-            Agents.Clear();
-            Ports.Clear();
 
             // Aviser l'interface pour rafraichir les commandes.
             CommandeResoudre.RaiseCanExecuteChanged();
-            CommandeDeplacer.RaiseCanExecuteChanged();
-        }
-
-        /// <summary>
-        /// Détermine si on peut déplacer.
-        /// </summary>
-        public bool PeutDeplacer()
-        {
-            return (_agentId != 0 && _port != null);
         }
 
         /// <summary>
@@ -366,7 +293,6 @@ namespace GraphExpert.Wpf.ViewModels
             if (null != agent)
             {
                 // Afficher.
-                Agents.Add(agent);
                 Formes.Add(new AgentVM(x, y, agent.Id, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
 
                 // Aviser l'interface pour rafraichir les commandes.
@@ -397,22 +323,6 @@ namespace GraphExpert.Wpf.ViewModels
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 _animation.Animer(_itemsControl, Formes, e.NewItems.OfType<IDeplacement>().ToArray());
-            }
-        }
-
-        /// <summary>
-        /// Populer la liste des ports.
-        /// </summary>
-        /// <param name="agentId"></param>
-        private void PopulerPorts(byte agentId)
-        {
-            Ports.Clear();
-
-            var agent = _repoAgents.Obtenir(agentId);
-
-            if (null != agent)
-            {
-                Ports.AddRange(_repoPorts.ObtenirPourNoeud(agent.NoeudId));
             }
         }
 

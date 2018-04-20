@@ -14,7 +14,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <ItemsControl Name="controleListe" Grid.Row="0" ItemsSource="{Binding Path=Formes}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -61,56 +60,7 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
-        <GroupBox Grid.Row="1" Header="Déplacer">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="80" />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0" Content="Agent :" />
-                    
-                    <Label Grid.Row="1" Grid.Column="0" Content="Port :" />
-
-                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Path=Agents}" SelectedValue="{Binding Path=AgentId}" SelectedValuePath="Id">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Rectangle Height="20" Width="20" Margin="5" Fill="{Binding Path=Couleur}" />
-                                    <TextBlock Text="Agent n°" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding Path=Id}" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-
-                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=Ports}" SelectedItem="{Binding Path=Port}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Port n°" />
-                                    <TextBlock Text="{Binding Path=Id}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </Grid>
-
-                <Button Grid.Column="1" Content="Déplacer" Command="{Binding Path=CommandeDeplacer}" CommandParameter="{Binding ElementName=controleListe}" />
-            </Grid>
-        </GroupBox>
-
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
