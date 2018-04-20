@@ -114,6 +114,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Header="Nbre jetons" DisplayMemberBinding="{Binding Path=Jetons.Count}" />
+
                         </GridView>
                     </ListView.View>
                 </ListView>
