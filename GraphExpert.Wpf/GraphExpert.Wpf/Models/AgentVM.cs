@@ -1,4 +1,5 @@
-﻿using GraphExpert.Wpf.Interfaces;
+﻿using GraphExpert.Data.Interfaces.Modeles;
+using GraphExpert.Wpf.Interfaces;
 using System.ComponentModel;
 using System.Windows.Media;
 
@@ -7,14 +8,13 @@ namespace GraphExpert.Wpf.Models
     public class AgentVM : INotifyPropertyChanged, IPositionCanvas
     {
         private double _x, _y;
+        private IAgent _agent;
 
-        public AgentVM(double x, double y, byte id, byte noeudId, Color c)
+        public AgentVM(double x, double y, IAgent agent)
         {
             _x = x;
             _y = y;
-            Id = id;
-            NoeudId = noeudId;
-            Couleur = new SolidColorBrush(c);
+            _agent = agent;
         }
 
         public int ZIndex => 2;
@@ -39,11 +39,21 @@ namespace GraphExpert.Wpf.Models
             }
         }
 
-        public byte NoeudId { get; set; }
+        public byte NoeudId
+        {
+            get => _agent.NoeudId;
+            set => _agent.NoeudId = value;
+        }
 
-        public Brush Couleur { get; set; }
+        public string Couleur => _agent.Couleur;
 
-        public byte Id { get; internal set; }
+        public byte Id => _agent.Id;
+
+        public string Etiquette
+        {
+            get => _agent.Etiquette;
+            set => _agent.Etiquette = value;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

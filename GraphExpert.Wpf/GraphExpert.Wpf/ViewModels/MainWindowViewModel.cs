@@ -171,6 +171,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public IEnumerable<StopVM> Noeuds => Formes.OfType<StopVM>();
 
+        /// <summary>
+        /// Obtient la liste des agents.
+        /// </summary>
+        public IEnumerable<AgentVM> Agents => Formes.OfType<AgentVM>();
+
         #endregion Properties
 
         #region Methods
@@ -257,6 +262,7 @@ namespace GraphExpert.Wpf.ViewModels
             // Vider l'IU.
             Formes.Clear();
             RaisePropertyChanged(@"Noeuds");
+            RaisePropertyChanged(@"Agents");
 
             // Aviser l'interface pour rafraichir les commandes.
             CommandeResoudre.RaiseCanExecuteChanged();
@@ -301,7 +307,8 @@ namespace GraphExpert.Wpf.ViewModels
             if (null != agent)
             {
                 // Afficher.
-                Formes.Add(new AgentVM(x, y, agent.Id, noeudId, (Color)ColorConverter.ConvertFromString(agent.Couleur)));
+                Formes.Add(new AgentVM(x, y, agent));
+                RaisePropertyChanged(@"Agents");
 
                 // Aviser l'interface pour rafraichir les commandes.
                 CommandeResoudre.RaiseCanExecuteChanged();
