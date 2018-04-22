@@ -22,13 +22,7 @@ namespace GraphExpert.Wpf.ViewModels
     /// </summary>
     public class MainWindowViewModel : Prism.Mvvm.BindableBase
     {
-
         #region Fields
-
-        /// <summary>
-        /// Contrôle des items.
-        /// </summary>
-        private ItemsControl _itemsControl;
 
         /// <summary>
         /// Algorithme sélectionné.
@@ -51,6 +45,11 @@ namespace GraphExpert.Wpf.ViewModels
         private ObservableCollection<IDeplacement> _deplacements = new ObservableCollection<IDeplacement>();
 
         /// <summary>
+        /// Contrôle des items.
+        /// </summary>
+        private ItemsControl _itemsControl;
+
+        /// <summary>
         /// Repos.
         /// </summary>
         private IRepoAgents _repoAgents;
@@ -62,6 +61,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// Résolveur.
         /// </summary>
         private IResolveur _resolveur;
+
+        /// <summary>
+        /// Conteneur pour la propriété.
+        /// </summary>
+        private string _solution = string.Empty;
 
         #endregion Fields
 
@@ -108,6 +112,11 @@ namespace GraphExpert.Wpf.ViewModels
         #endregion Destructors
 
         #region Properties
+
+        /// <summary>
+        /// Obtient la liste des agents.
+        /// </summary>
+        public IEnumerable<AgentVM> Agents => Formes.OfType<AgentVM>();
 
         /// <summary>
         /// Menu contextuel 'Nettoyer'.
@@ -172,9 +181,17 @@ namespace GraphExpert.Wpf.ViewModels
         public IEnumerable<StopVM> Noeuds => Formes.OfType<StopVM>();
 
         /// <summary>
-        /// Obtient la liste des agents.
+        /// Solution à afficher.
         /// </summary>
-        public IEnumerable<AgentVM> Agents => Formes.OfType<AgentVM>();
+        public string Solution
+        {
+            get => _solution;
+            set
+            {
+                _solution = value;
+                RaisePropertyChanged(@"Solution");
+            }
+        }
 
         #endregion Properties
 
@@ -264,6 +281,9 @@ namespace GraphExpert.Wpf.ViewModels
             RaisePropertyChanged(@"Noeuds");
             RaisePropertyChanged(@"Agents");
 
+            // Vider la partie "Solution".
+            Solution = string.Empty;
+
             // Aviser l'interface pour rafraichir les commandes.
             CommandeResoudre.RaiseCanExecuteChanged();
         }
@@ -289,6 +309,9 @@ namespace GraphExpert.Wpf.ViewModels
         /// </summary>
         public void Resoudre()
         {
+            // Remettre à zéro la solution.
+            Solution = string.Empty;
+
             _resolveur.Resoudre(_algorithme, _deplacements);
         }
 
@@ -337,7 +360,12 @@ namespace GraphExpert.Wpf.ViewModels
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                _animation.Animer(_itemsControl, Formes, e.NewItems.OfType<IDeplacement>().ToArray());
+                var deplacements = e.NewItems.OfType<IDeplacement>();
+
+                _animation.Animer(_itemsControl, Formes, deplacements.ToArray());
+
+                if (Solution.Length != 0) Solution += ", ";
+                Solution += string.Join(", ", deplacements.Select(p => p.AgentId));
             }
         }
 

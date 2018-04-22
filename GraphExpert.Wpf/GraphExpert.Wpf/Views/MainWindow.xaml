@@ -156,7 +156,7 @@
                         <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                    <TextBox Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Text="{Binding Path=Solution, Mode=OneWay}" IsReadOnly="True" />
 
                     <Button Grid.Row="1" Content="Nettoyer" Command="{Binding Path=CommandeNettoyer}" />
                 </Grid>
