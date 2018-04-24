@@ -6,6 +6,7 @@ using GraphExpert.Wpf.Interfaces;
 using GraphExpert.Wpf.Models;
 using GraphExpert.Wpf.Services;
 using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -233,7 +234,8 @@ namespace GraphExpert.Wpf.ViewModels
             else
             {
                 // Ajout aux éléments à afficher.
-                Formes.Add(new LineVM(_arret1, arret));
+                var ligneUI = new LineVM(_arret1, arret);
+                Formes.Add(ligneUI);
 
                 // Ajouter les deux liaisons dans les deux sens.
                 var portDepa = _repoPorts.Ajouter(_arret1.Id);
@@ -242,8 +244,8 @@ namespace GraphExpert.Wpf.ViewModels
                 _repoLiaisons.Ajouter(portArri.NoeudId, portArri.Id, portDepa.NoeudId, portDepa.Id);
                 _repoArrets.Obtenir(_arret1.Id).Degree = _repoArrets.Obtenir(_arret1.Id).Degree + 1;
                 _repoArrets.Obtenir(arret.Id).Degree = _repoArrets.Obtenir(arret.Id).Degree + 1;
-                AjouterPortVM(_arret1, portDepa);
-                AjouterPortVM(arret, portArri);
+                AjouterPortVM(_arret1, ligneUI, portDepa);
+                AjouterPortVM(arret, ligneUI, portArri);
 
                 // Retirer l'arrêt.
                 _arret1 = null;
@@ -342,13 +344,88 @@ namespace GraphExpert.Wpf.ViewModels
         /// Ajoute le port au noeud demandé.
         /// </summary>
         /// <param name="noeud">Noeud.</param>
+        /// <param name="arete">Arête.</param>
         /// <param name="port">¨Port.</param>
-        private void AjouterPortVM(StopVM noeud, IPort port)
+        private void AjouterPortVM(StopVM noeud, LineVM arete, IPort port)
         {
-            Formes.Add(new PortVM(port, noeud.X, noeud.Y));
+            // Positionner.
+            double x = 0d, y = 0d;
+
+            PositionnerLabelPort(noeud, arete, ref x, ref y);
+
+            // Ajout du port.
+            Formes.Add(new PortVM(port, x, y));
 
             // Aviser l'interface pour résoudre.
             CommandeResoudre.RaiseCanExecuteChanged();
+        }
+
+        /// <summary>
+        /// Positionne l'étiquette (label) du port.
+        /// </summary>
+        /// <param name="noeud">Noeud de départ.</param>
+        /// <param name="arete">Arête.</param>
+        /// <param name="x">Position X.</param>
+        /// <param name="y">Position Y.</param>
+        private void PositionnerLabelPort(StopVM noeud, LineVM arete, ref double x, ref double y)
+        {
+            double D = 30; // diametre du cercle
+            double
+                nx = noeud.X + D / 2,
+                ny = noeud.Y + D / 2;
+            double Ax = nx, Ay = ny; // Position du centre du cercle courant
+
+            double d1 = (arete.X - Ax) * (arete.X - Ax) + (arete.Y - Ay) * (arete.Y - Ay);
+            double d2 = (arete.X2 - Ax) * (arete.X2 - Ax) + (arete.Y2 - Ay) * (arete.Y2 - Ay);
+
+            double Bx, By; // position du de l'autre bout de la ligne
+
+            if (d1 > d2)
+            {
+                // Arrete P1 est le plus différent de A
+                Bx = arete.X;
+                By = arete.Y;
+            }
+            else
+            {
+                // Arrete P2 est le plus différent de A
+                Bx = arete.X2;
+                By = arete.Y2;
+            }
+
+            double
+                U = 10, // distance parallèle à a ligne du # (à partir de la circonférence)
+                V = 10; // distance perpendiculaire à a ligne du #
+
+            double
+                Lx = Bx - Ax,
+                Ly = By - Ay; // Description vecteur de la ligne a->b
+
+            double LL = Math.Sqrt(Lx * Lx + Ly * Ly);
+
+            double
+                L1x = Lx / LL,
+                L1y = Ly / LL; //Direction de L, normalisé
+
+            double
+                M1x = -L1y, // L1 avec rotation de -90 deg.
+                M1y = L1x;
+
+            double UR = U + D / 2;
+
+            double
+                LUx = L1x * UR,
+                LUy = L1y * UR;
+
+            double
+                MVx = M1x * V,
+                MVy = M1y * V;
+
+            double charW = 6, charH = 8; // taille aprox. d'un charactere
+
+            // Position du haut gauche du # de port
+            x = Ax + LUx + MVx - charW / 2;
+            y = Ay + LUy + MVy - charH / 2;
         }
 
         /// <summary>
