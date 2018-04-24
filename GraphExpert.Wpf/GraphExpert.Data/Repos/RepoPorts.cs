@@ -24,7 +24,7 @@ namespace GraphExpert.Data.Repos
         public IPort Ajouter(byte noeudId)
         {
             var portsMemeNoeud = _ports.Where(p => p.NoeudId == noeudId);
-            byte id = 1;
+            byte id = 0;
 
             if (portsMemeNoeud.Any())
             {
