@@ -295,6 +295,7 @@ namespace GraphExpert.Wpf.ViewModels
 
             // Aviser l'interface pour rafraichir les commandes.
             CommandeResoudre.RaiseCanExecuteChanged();
+            CommandeReinitialiser.RaiseCanExecuteChanged();
         }
 
         /// <summary>
