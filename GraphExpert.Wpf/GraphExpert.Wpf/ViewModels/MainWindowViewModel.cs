@@ -93,6 +93,7 @@ namespace GraphExpert.Wpf.ViewModels
             // Initialisation des commandes.
             CommandeResoudre = new DelegateCommand(Resoudre, PeutResoudre);
             CommandeNettoyer = new DelegateCommand(Nettoyer);
+            CommandeReinitialiser = new DelegateCommand(Reinitialiser, PeutReinitialiser);
 
             _deplacements.CollectionChanged += ListeDeplacements_CollectionChanged;
         }
@@ -123,6 +124,11 @@ namespace GraphExpert.Wpf.ViewModels
         /// Menu contextuel 'Nettoyer'.
         /// </summary>
         public ICommand CommandeNettoyer { get; private set; }
+
+        /// <summary>
+        /// Commande pour réinitialiser les agents et les jetons.
+        /// </summary>
+        public DelegateCommand CommandeReinitialiser { get; private set; }
 
         /// <summary>
         /// Bouton 'résoudre'.
@@ -252,6 +258,7 @@ namespace GraphExpert.Wpf.ViewModels
 
                 // Aviser l'interface pour résoudre.
                 CommandeResoudre.RaiseCanExecuteChanged();
+                CommandeReinitialiser.RaiseCanExecuteChanged();
             }
         }
 
@@ -309,6 +316,46 @@ namespace GraphExpert.Wpf.ViewModels
         /// <summary>
         /// Résoudre par l'algorithme choisi.
         /// </summary>
+        public bool PeutReinitialiser()
+        {
+            return ((true == Formes.OfType<AgentVM>()?.Any()) &&
+                (true == Formes.OfType<StopVM>()?.Any()));
+        }
+
+        /// <summary>
+        /// Résoudre par l'algorithme choisi.
+        /// </summary>
+        public void Reinitialiser()
+        {
+            for (int i = (Formes.Count - 1); i >= 0; i--)
+            {
+                if (Formes[i].GetType() == typeof(AgentVM))
+                {
+                    Formes.RemoveAt(i);
+                }
+                else if (Formes[i].GetType() == typeof(StopVM))
+                {
+                    ((StopVM)Formes.ElementAt(i)).Jetons?.Clear();
+                }
+            }
+
+            // Vider les agents.
+            _repoAgents.Vider();
+
+            // Vider l'instance en mémoire d'un arrêt cliqué.
+            _arret1 = null;
+
+            // Vider la partie "Solution".
+            Solution = string.Empty;
+
+            // Réinitialiser les listes.
+            RaisePropertyChanged(@"Noeuds");
+            RaisePropertyChanged(@"Agents");
+        }
+
+        /// <summary>
+        /// Résoudre par l'algorithme choisi.
+        /// </summary>
         public void Resoudre()
         {
             // Remettre à zéro la solution.
@@ -337,6 +384,7 @@ namespace GraphExpert.Wpf.ViewModels
 
                 // Aviser l'interface pour rafraichir les commandes.
                 CommandeResoudre.RaiseCanExecuteChanged();
+                CommandeReinitialiser.RaiseCanExecuteChanged();
             }
         }
 
