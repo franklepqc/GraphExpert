@@ -234,7 +234,7 @@ namespace GraphExpert.Wpf.ViewModels
             else
             {
                 // Ajout aux éléments à afficher.
-                var ligneUI = new LineVM(_arret1, arret);
+                var ligneUI = new LineVM(_arret1, arret, Colors.Black.ToString());
                 Formes.Add(ligneUI);
 
                 // Ajouter les deux liaisons dans les deux sens.

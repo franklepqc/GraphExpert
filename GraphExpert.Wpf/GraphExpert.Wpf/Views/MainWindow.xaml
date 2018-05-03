@@ -45,8 +45,8 @@
                                   Y1="{Binding Path=Y}"
                                   X2="{Binding Path=X2}"
                                   Y2="{Binding Path=Y2}"
-                                  Stroke="Black"
-                                  StrokeThickness="1" />
+                                  Stroke="{Binding Path=Couleur}"
+                                  StrokeThickness="2" />
                         </DataTemplate>
                     </local:SelecteurDataTemplate.TemplateLiaison>
                 </local:SelecteurDataTemplate>
