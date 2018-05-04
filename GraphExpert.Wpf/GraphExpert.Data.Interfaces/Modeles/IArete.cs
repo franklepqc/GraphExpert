@@ -6,5 +6,6 @@
         byte NoeudIdArrivee { get; }
         byte PortIdDepart { get; }
         byte PortIdArrivee { get; }
+        string Couleur { get; set; }
     }
 }

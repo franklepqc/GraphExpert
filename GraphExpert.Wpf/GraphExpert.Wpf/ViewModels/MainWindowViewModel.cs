@@ -239,17 +239,17 @@ namespace GraphExpert.Wpf.ViewModels
             // Il s'agit du deuxième ; on crée la liaison.
             else
             {
-                // Ajout aux éléments à afficher.
-                var ligneUI = new LineVM(_arret1, arret, Colors.Black.ToString());
-                Formes.Add(ligneUI);
-
                 // Ajouter les deux liaisons dans les deux sens.
                 var portDepa = _repoPorts.Ajouter(_arret1.Id);
                 var portArri = _repoPorts.Ajouter(arret.Id);
-                _repoLiaisons.Ajouter(portDepa.NoeudId, portDepa.Id, portArri.NoeudId, portArri.Id);
+                var arete = _repoLiaisons.Ajouter(portDepa.NoeudId, portDepa.Id, portArri.NoeudId, portArri.Id);
                 _repoLiaisons.Ajouter(portArri.NoeudId, portArri.Id, portDepa.NoeudId, portDepa.Id);
                 _repoArrets.Obtenir(_arret1.Id).Degree = _repoArrets.Obtenir(_arret1.Id).Degree + 1;
                 _repoArrets.Obtenir(arret.Id).Degree = _repoArrets.Obtenir(arret.Id).Degree + 1;
+
+                // Ajout aux éléments à afficher.
+                var ligneUI = new LineVM(_arret1, arret, arete);
+                Formes.Add(ligneUI);
                 AjouterPortVM(_arret1, ligneUI, portDepa);
                 AjouterPortVM(arret, ligneUI, portArri);
 

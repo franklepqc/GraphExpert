@@ -31,7 +31,7 @@ namespace GraphExpert.Data.Repos
 
             if (null == liaison)
             {
-                liaison = new Arete(noeudIdDepart, portIdDepart, noeudIdArrivee, portIdArrivee);
+                liaison = new Arete(noeudIdDepart, portIdDepart, noeudIdArrivee, portIdArrivee, "black");
 
                 _liaisons.Add(liaison);
             }
